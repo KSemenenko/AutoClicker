@@ -106,13 +106,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Interface\Inputs\IInputSimulator.cs" />
+    <Compile Include="Model\Abstraction\Interface\IExecutableStep.cs" />
+    <Compile Include="Model\Abstraction\Interface\IImageSource.cs" />
+    <Compile Include="Model\Abstraction\Interface\Inputs\IInputSimulator.cs" />
+    <Compile Include="Model\Abstraction\Interface\ITestResult.cs" />
+    <Compile Include="Model\ExecutableSteps\ClickStep.cs" />
+    <Compile Include="Model\ExecutableSteps\RootStep.cs" />
+    <Compile Include="Model\IImageSource.cs" />
     <Compile Include="Model\Inputs\ImageSearch.cs" />
     <Compile Include="Model\Inputs\InputSimulator.cs" />
-    <Compile Include="Interface\Inputs\IImageSearch.cs" />
-    <Compile Include="Interface\Inputs\IScreenMaker.cs" />
+    <Compile Include="Model\Abstraction\Interface\Inputs\IImageSearch.cs" />
+    <Compile Include="Model\Abstraction\Interface\Inputs\IScreenMaker.cs" />
     <Compile Include="Model\Inputs\ScreenMaker.cs" />
     <Compile Include="Model\Rectangle.cs" />
+    <Compile Include="Model\Abstraction\StepBase.cs" />
+    <Compile Include="Model\TestResult.cs" />
     <Compile Include="Telemetry\ITelemetryClient.cs" />
     <Compile Include="Telemetry\TelemetryClient.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -139,8 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Project.cs" />
-    <Compile Include="Model\Step.cs" />
-    <Compile Include="Model\TestCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
