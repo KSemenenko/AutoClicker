@@ -58,17 +58,22 @@ namespace AutoClicker.View
                 var curx = e.GetPosition(null).X;
                 var cury = e.GetPosition(null).Y;
 
-                var r = new Rectangle();
                 var brush = new SolidColorBrush(Colors.White);
-                r.Stroke = brush;
-                r.Fill = brush;
-                r.StrokeThickness = 1;
-                r.Width = Math.Abs(curx - x);
-                r.Height = Math.Abs(cury - y);
+                var r = new Rectangle
+                {
+                    Stroke = brush,
+                    Fill = brush,
+                    StrokeThickness = 1,
+                    Width = Math.Abs(curx - x),
+                    Height = Math.Abs(cury - y)
+                };
+
                 cnv.Children.Clear();
                 cnv.Children.Add(r);
+
                 Canvas.SetLeft(r, x);
                 Canvas.SetTop(r, y);
+
                 if (e.LeftButton == MouseButtonState.Released)
                 {
                     cnv.Children.Clear();
