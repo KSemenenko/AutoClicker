@@ -12,5 +12,7 @@ namespace AutoClicker.Inputs
     {
         BitmapSource GetBitmapSourceFromScreen();
         Bitmap GetBitmapFromScreen();
+        BitmapSource GetBitmapSourceFromScreen(int x, int y, int width, int height);
+        Bitmap GetBitmapFromScreen(int x, int y, int width, int height);
     }
 }

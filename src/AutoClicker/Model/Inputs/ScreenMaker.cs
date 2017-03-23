@@ -23,7 +23,8 @@ namespace AutoClicker.Inputs
                 using (var bmpGraphics = Graphics.FromImage(screenBmp))
                 {
                     bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
-                    return Imaging.CreateBitmapSourceFromHBitmap(screenBmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    return Imaging.CreateBitmapSourceFromHBitmap(screenBmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
                 }
             }
         }
@@ -39,6 +40,29 @@ namespace AutoClicker.Inputs
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 g.CopyFromScreen((int) screenLeft, (int) screenTop, 0, 0, bmp.Size);
+                return bmp;
+            }
+        }
+
+        public BitmapSource GetBitmapSourceFromScreen(int x, int y, int width, int height)
+        {
+            using (var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            {
+                using (var bmpGraphics = Graphics.FromImage(screenBmp))
+                {
+                    bmpGraphics.CopyFromScreen(x, y, 0, 0, new System.Drawing.Size(width, height));
+                    return Imaging.CreateBitmapSourceFromHBitmap(screenBmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
+                }
+            }
+        }
+
+        public Bitmap GetBitmapFromScreen(int x, int y, int width, int height)
+        {
+            Bitmap bmp = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CopyFromScreen(x, y, 0, 0, bmp.Size);
                 return bmp;
             }
         }
