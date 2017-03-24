@@ -10,7 +10,7 @@ namespace AutoClicker.Model.ExecutableSteps
         {
         }
 
-        public override ITestResult Execuite()
+        public override ITestResult Execuite(bool isForced = false)
         {
             Console.WriteLine("ye");
             return base.Execuite();
