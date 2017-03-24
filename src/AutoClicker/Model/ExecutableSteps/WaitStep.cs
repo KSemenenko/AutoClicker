@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using System.Threading;
 using AutoClicker.Model.Abstraction;
 using AutoClicker.Model.Abstraction.Interface;
@@ -7,11 +7,11 @@ namespace AutoClicker.Model.ExecutableSteps
 {
     public class WaitStep : StepBase
     {
-        private readonly int _time;
+        private readonly TimeSpan _time;
 
-        public WaitStep(string id, uint time) : base(id)
+        public WaitStep(string id, TimeSpan time) : base(id)
         {
-            _time = (int)time * 1000;
+            _time = time;
         }
 
         public override ITestResult Execuite(bool isForced = false)

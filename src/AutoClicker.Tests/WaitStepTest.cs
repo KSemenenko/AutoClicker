@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using AutoClicker.Model.Abstraction.Interface;
+using System.Diagnostics; 
 using AutoClicker.Model.ExecutableSteps;
-using FluentAssertions;
-using NSubstitute;
-using NSubstitute.ReturnsExtensions;
+using FluentAssertions; 
 using NUnit.Framework;
 
 namespace AutoClicker.Tests
@@ -16,16 +12,16 @@ namespace AutoClicker.Tests
         [Test]
         public void WaitStepExeptionTest()
         {
+            TimeSpan ts = TimeSpan.FromSeconds(2);
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var step = new WaitStep("wait", 5);
+            var step = new WaitStep("wait", ts);
 
             step.Execuite();
             sw.Stop();
 
-            var value  = sw.Elapsed.Seconds == 5;
+            sw.Elapsed.Should().BeGreaterThan(ts);
             
-            value.ShouldBeEquivalentTo(true);
         }
 
       
