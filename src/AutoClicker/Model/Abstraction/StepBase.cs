@@ -7,144 +7,149 @@ namespace AutoClicker.Model.ExecutableSteps
 {
     public abstract class StepBase : IExecutableStep
     {
+        private readonly List<IExecutableStep> _childs = new List<IExecutableStep>();
+
         protected StepBase(string id)
         {
             Id = id;
         }
- 
-        
+
         public IEnumerable<IExecutableStep> Childs => _childs;
         public string Id { get; }
         public IExecutableStep Root { get; set; }
-         
-        private readonly List<IExecutableStep> _childs = new List<IExecutableStep>();
 
-        public virtual bool TryResetChild(string rootId, IExecutableStep child)
+        public virtual bool TryResetChild(IExecutableStep child, string rootId = null)
         {
-            if (rootId == Id)
+            if(!string.IsNullOrEmpty(rootId))
             {
-                return ResetChild(child);
-            }
-        
-            var root = FindExecutableStepById(rootId);
-            if (root != null)
-                return root.TryResetChild(rootId, child);
-            
-            return false;
-        }
-        private bool ResetChild(IExecutableStep child)
-        {
-            for (int i = 0; i < _childs.Count; i++)
-            {
-                if (child.Id == _childs[i].Id)
+                if(rootId == Id)
                 {
-                    _childs[i] = child;
-                    return true;
+                    return ResetChild(child);
                 }
+
+                var rootStep = FindExecutableStepById(rootId);
+                if(rootStep != null)
+                {
+                    return rootStep.TryResetChild(child, rootId);
+                }
+
+                return false;
             }
-           
-            return false;
-        }
-        public bool TryAddChild(string rootId, IExecutableStep child)
-        {
-            if (rootId == Id)
-            { 
-                 return AddChild(child); 
-            }
-            else
+
+            var root = FindExecutableStepById(child.Id)?.Root;
+            if(root != null)
             {
-                var root = FindExecutableStepById(rootId);
-                if (root != null)
-                    return root.TryAddChild(rootId, child);
+                return root.TryResetChild(child, root.Id);
             }
+
             return false;
         }
 
-
-        private bool AddChild(IExecutableStep child)
+        public bool TryAddChild(IExecutableStep child, string rootId = null)
         {
-            if (FindExecutableStepById(child.Id) == null)
+            if(child == null)
             {
-                _childs.Add(child);
-                child.Root = this;
-                return true;
+                return false;
             }
+
+            if(string.IsNullOrEmpty(rootId))
+            {
+                return AddChild(child);
+            }
+
+            if(rootId == Id)
+            {
+                return AddChild(child);
+            }
+
+            var root = FindExecutableStepById(rootId);
+            if(root != null)
+            {
+                return root.TryAddChild(child);
+            }
+
             return false;
         }
 
-       
         public bool TryRemoveChild(string id)
         {
             var step = FindExecutableStepById(id);
-            if (step?.Root != null)
+            if(step?.Root != null)
             {
-                return TryRemoveChild(step);
-            } 
+                return step.Root.TryRemoveChild(step);
+            }
+
             return false;
         }
 
         public bool TryRemoveChild(IExecutableStep child)
         {
-            if (child.Root.Id == Id)
+            if(child?.Root == null)
+            {
+                return false;
+            }
+
+            if(_childs.Contains(child))
             {
                 _childs.Remove(child);
                 return true;
             }
-            else
+
+            var step = FindExecutableStepById(child.Root.Id);
+            if(step?.Root != null)
             {
-                return child.Root.TryRemoveChild(child);
-            } 
+                return step.TryRemoveChild(child);
+            }
+
+            return false;
         }
 
-        
         public virtual ITestResult Execuite()
         {
             var childsResult = new TestResult {Result = ResulType.Succeeded};
 
-            foreach (var child in Childs)
+            foreach(var child in Childs)
             {
                 var result = child.Execuite();
                 childsResult.StackTrace.Add(result);
 
-                if (result.Result == ResulType.Failed)
+                if(result.Result == ResulType.Failed)
                 {
                     childsResult.Result = ResulType.Failed;
                     break;
                 }
-                if (result.Result == ResulType.Warning)
+                if(result.Result == ResulType.Warning)
+                {
                     childsResult.Result = ResulType.Warning;
+                }
             }
 
             return childsResult;
         }
 
-
-        public virtual AggregateException  GetValidateException()
+        public virtual AggregateException GetValidateException()
         {
             var childsEx = new List<Exception>();
-            foreach (var child in Childs)
+            foreach(var child in Childs)
             {
-                if (child == null)
-                {
-                    childsEx.Add(new NullReferenceException());
-                    continue;
-                }
-
                 var innerExceptions = child.GetValidateException().InnerExceptions;
-                if (innerExceptions != null)
+                if(innerExceptions != null)
+                {
                     childsEx.AddRange(innerExceptions.ToArray());
+                }
             }
-         
-           return new AggregateException(childsEx);
-            
+
+            return new AggregateException(childsEx);
         }
 
         public virtual IExecutableStep FindExecutableStepById(string id)
         {
             var step = TryGetStepById(id);
-            
-            if (step == null && Root != null)
+
+            if(step == null && Root != null)
+            {
                 step = Root.FindExecutableStepById(id);
+            }
 
             return step;
         }
@@ -152,18 +157,47 @@ namespace AutoClicker.Model.ExecutableSteps
         public virtual IExecutableStep TryGetStepById(string id)
         {
             IExecutableStep step = null;
-            if (id == Id)
+            if(id == Id)
+            {
                 step = this;
+            }
             else
             {
-                foreach (var child in Childs)
+                foreach(var child in Childs)
                 {
                     step = child.TryGetStepById(id);
-                    if (step != null)
+                    if(step != null)
+                    {
                         break;
+                    }
                 }
             }
             return step;
+        }
+
+        private bool ResetChild(IExecutableStep child)
+        {
+            for(var i = 0; i < _childs.Count; i++)
+            {
+                if(child.Id == _childs[i].Id)
+                {
+                    _childs[i] = child;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool AddChild(IExecutableStep child)
+        {
+            if(FindExecutableStepById(child.Id) == null)
+            {
+                _childs.Add(child);
+                child.Root = this;
+                return true;
+            }
+            return false;
         }
     }
 }

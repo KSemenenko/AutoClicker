@@ -34,8 +34,8 @@ namespace AutoClicker.Interface
         /// </summary>
         IExecutableStep TryGetStepById(string id);
 
-        bool TryResetChild(string rootId, IExecutableStep child);
-        bool TryAddChild(string rootId, IExecutableStep child);
+        bool TryResetChild(IExecutableStep child, string rootId = null);
+        bool TryAddChild(IExecutableStep child, string rootId = null); 
         bool TryRemoveChild(string id);
         bool TryRemoveChild(IExecutableStep child);
         AggregateException GetValidateException();
