@@ -79,8 +79,7 @@ namespace AutoClicker.View
                     cnv.Children.Clear();
                     width = e.GetPosition(null).X - x;
                     height = e.GetPosition(null).Y - y;
-                    CaptureBitmap = screenMaker.GetBitmapFromScreen(Convert.ToInt32(x), Convert.ToInt32(y),
-                        Convert.ToInt32(width), Convert.ToInt32(height));
+                    CaptureBitmap = screenMaker.GetBitmapFromScreen(new Model.Rectangle(x, y, width, height));
                     x = y = 0;
                     isMouseDown = false;
                     Close();

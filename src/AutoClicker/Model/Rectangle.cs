@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 
 namespace AutoClicker.Model
 {
@@ -16,6 +17,13 @@ namespace AutoClicker.Model
             CenterY = Height / 2 + Y;
         }
 
+        public Rectangle(double x, double y, double width, double height) 
+            :this(Convert.ToInt32(x), Convert.ToInt32(y), Convert.ToInt32(width), Convert.ToInt32(height))
+        {
+
+        }
+
+
         public int X { get; }
         public int Y { get; }
 
@@ -28,6 +36,11 @@ namespace AutoClicker.Model
         public static Rectangle Empty => new Rectangle(0, 0, 0, 0);
 
         public static Rectangle From(System.Drawing.Rectangle rect)
+        {
+            return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+        }
+
+        public static Rectangle From(Rect rect)
         {
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }

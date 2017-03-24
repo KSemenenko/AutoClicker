@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Rectangle = AutoClicker.Model.Rectangle;
 
 namespace AutoClicker.Inputs
 {
@@ -44,7 +45,7 @@ namespace AutoClicker.Inputs
             }
         }
 
-        public BitmapSource GetBitmapSourceFromScreen(Model.Rectangle rectangle)
+        public BitmapSource GetBitmapSourceFromScreen(Rectangle rectangle)
         {
             using (var screenBmp = new Bitmap(rectangle.Width, rectangle.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
             {
@@ -57,7 +58,7 @@ namespace AutoClicker.Inputs
             }
         }
 
-        public Bitmap GetBitmapFromScreen(Model.Rectangle rectangle)
+        public Bitmap GetBitmapFromScreen(Rectangle rectangle)
         {
             Bitmap bmp = new Bitmap(rectangle.Width, rectangle.Height);
             using (Graphics g = Graphics.FromImage(bmp))
