@@ -17,7 +17,7 @@ namespace AutoClicker.Model.ExecutableSteps
         public override ITestResult Execuite(bool isForced = false)
         {
             Thread.Sleep(_time);
-            return base.Execuite(isForced);
+            return base.Execuite();
         }
     }
 }

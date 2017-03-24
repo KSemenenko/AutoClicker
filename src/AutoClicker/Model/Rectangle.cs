@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace AutoClicker.Model
 {
-    public class Rectangle : IComparable<Rectangle>
+    public class Rectangle : IEquatable<Rectangle>
     {
         public Rectangle(int x, int y, int width, int height)
         {
@@ -42,14 +42,19 @@ namespace AutoClicker.Model
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
-        public int CompareTo(Rectangle other)
+        public bool Equals(Rectangle other)
         {
-            if (X == other.X && Y == other.Y && Width == other.Width && Height == other.Height)
-            {
-                return 0;
-            }
+            return (X == other.X && Y == other.Y && Width == other.Width && Height == other.Height);
+        }
 
-            return 1;
+        public static bool operator ==(Rectangle a, Rectangle b)
+        {
+            return (a.X == b.X && a.Y == b.Y && a.Width == b.Width && a.Height == b.Height);
+        }
+
+        public static bool operator !=(Rectangle a, Rectangle b)
+        {
+            return !(a == b);
         }
     }
 }

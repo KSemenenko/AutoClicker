@@ -110,9 +110,11 @@
     <Compile Include="Model\Abstraction\Interface\IImageSource.cs" />
     <Compile Include="Model\Abstraction\Interface\Inputs\IInputSimulator.cs" />
     <Compile Include="Model\Abstraction\Interface\ITestResult.cs" />
+    <Compile Include="Model\ExecutableSteps\SearchPictureModule.cs" />
     <Compile Include="Model\ExecutableSteps\SearchPictureStep.cs" />
     <Compile Include="Model\ExecutableSteps\ClickStep.cs" />
     <Compile Include="Model\ExecutableSteps\RootStep.cs" />
+    <Compile Include="Model\ExecutableSteps\WaitPictureStep.cs" />
     <Compile Include="Model\ExecutableSteps\WaitStep.cs" />
     <Compile Include="Model\IImageSource.cs" />
     <Compile Include="Model\Inputs\ImageSearch.cs" />

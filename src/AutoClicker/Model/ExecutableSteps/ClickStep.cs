@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using AutoClicker.Model.Abstraction;
 using AutoClicker.Model.Abstraction.Interface;
+using AutoClicker.Model.Abstraction.Interface.Inputs;
 
 namespace AutoClicker.Model.ExecutableSteps
 {
@@ -11,8 +13,7 @@ namespace AutoClicker.Model.ExecutableSteps
         }
 
         public override ITestResult Execuite(bool isForced = false)
-        {
-            Console.WriteLine("ye");
+        { 
             return base.Execuite();
         }
     }
