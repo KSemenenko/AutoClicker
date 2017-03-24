@@ -5,8 +5,7 @@ using System.Collections.Generic;
  *  
 *    Need implement types: 
 *    Root,
-*    Click,
-*    DoubleClick,
+*    Click, 
 *    WaitSource,
 *    ExecuiteTestCase,
 *    ExecuiteIfNotFindSource
@@ -20,7 +19,7 @@ namespace AutoClicker.Model.Abstraction.Interface
         string Id { get; }
         IExecutableStep Root { get; set; }
         IEnumerable<IExecutableStep> Childs { get; }
-        ITestResult Execuite();
+        ITestResult Execuite(bool isForced = false);
 
         /// <summary>
         ///     Find step in all tree

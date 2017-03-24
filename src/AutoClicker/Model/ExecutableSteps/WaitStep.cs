@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Threading;
 using AutoClicker.Model.Abstraction;
 using AutoClicker.Model.Abstraction.Interface;
 
 namespace AutoClicker.Model.ExecutableSteps
 {
-    public class ClickStep : StepBase
+    public class WaitStep : StepBase
     {
-        public ClickStep(string id) : base(id)
+        private readonly TimeSpan _time;
+
+        public WaitStep(string id, TimeSpan time) : base(id)
         {
+            _time = time;
         }
 
         public override ITestResult Execuite(bool isForced = false)
         {
-            Console.WriteLine("ye");
-            return base.Execuite();
+            Thread.Sleep(_time);
+            return base.Execuite(isForced);
         }
     }
 }

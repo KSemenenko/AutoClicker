@@ -104,7 +104,7 @@ namespace AutoClicker.Model.Abstraction
             return false;
         }
 
-        public virtual ITestResult Execuite()
+        public virtual ITestResult Execuite(bool isForced = false)
         {
             var childsResult = new TestResult {Result = ResulType.Succeeded};
 
