@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoClicker.Interface;
 
-namespace AutoClicker.Model.ExecutableSteps
+namespace AutoClicker.Model.Abstraction
 {
     public abstract class StepBase : IExecutableStep
     {
