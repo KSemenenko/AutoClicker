@@ -2,7 +2,7 @@
 
 namespace AutoClicker.Model.ExecutableSteps
 {
-     public class RootStep : StepBase 
+    public class RootStep : StepBase
     {
         public RootStep(string id) : base(id)
         {

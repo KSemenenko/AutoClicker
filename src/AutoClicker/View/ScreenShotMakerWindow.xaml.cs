@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using AutoClicker.Interface.Inputs;
+using AutoClicker.Model.Abstraction.Interface.Inputs;
 using AutoClicker.Model.Inputs;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
@@ -17,9 +17,9 @@ namespace AutoClicker.View
     /// </summary>
     public partial class ScreenShotMakerWindow : Window
     {
+        private readonly IScreenMaker screenMaker;
         private double height;
         private bool isMouseDown;
-        private readonly IScreenMaker screenMaker;
         private double width;
         private double x;
         private double y;
@@ -37,11 +37,12 @@ namespace AutoClicker.View
         {
             get
             {
-                if (CaptureBitmap == null)
+                if(CaptureBitmap == null)
+                {
                     return null;
+                }
 
-                return Imaging.CreateBitmapSourceFromHBitmap(CaptureBitmap.GetHbitmap(),
-                    IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                return Imaging.CreateBitmapSourceFromHBitmap(CaptureBitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
         }
 
@@ -54,20 +55,13 @@ namespace AutoClicker.View
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isMouseDown)
+            if(isMouseDown)
             {
                 var curx = e.GetPosition(null).X;
                 var cury = e.GetPosition(null).Y;
 
                 var brush = new SolidColorBrush(Colors.White);
-                var r = new Rectangle
-                {
-                    Stroke = brush,
-                    Fill = brush,
-                    StrokeThickness = 1,
-                    Width = Math.Abs(curx - x),
-                    Height = Math.Abs(cury - y)
-                };
+                var r = new Rectangle {Stroke = brush, Fill = brush, StrokeThickness = 1, Width = Math.Abs(curx - x), Height = Math.Abs(cury - y)};
 
                 cnv.Children.Clear();
                 cnv.Children.Add(r);
@@ -75,7 +69,7 @@ namespace AutoClicker.View
                 Canvas.SetLeft(r, x);
                 Canvas.SetTop(r, y);
 
-                if (e.LeftButton == MouseButtonState.Released)
+                if(e.LeftButton == MouseButtonState.Released)
                 {
                     cnv.Children.Clear();
                     width = e.GetPosition(null).X - x;

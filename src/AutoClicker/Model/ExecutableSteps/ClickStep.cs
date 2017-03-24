@@ -1,5 +1,4 @@
-﻿using System; 
-using AutoClicker.Interface;
+﻿using System;
 using AutoClicker.Model.Abstraction;
 using AutoClicker.Model.Abstraction.Interface;
 

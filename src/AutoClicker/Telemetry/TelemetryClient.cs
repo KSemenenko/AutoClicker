@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoClicker.Telemetry
+﻿namespace AutoClicker.Telemetry
 {
-    class TelemetryClient : ITelemetryClient
+    internal class TelemetryClient : ITelemetryClient
     {
     }
 }

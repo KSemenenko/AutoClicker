@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace AutoClicker.Model
 {
-    class Rectangle
+    internal class Rectangle
     {
         public Rectangle(int x, int y, int width, int height)
         {
@@ -17,12 +17,9 @@ namespace AutoClicker.Model
             CenterY = Height / 2 + Y;
         }
 
-        public Rectangle(double x, double y, double width, double height) 
-            :this(Convert.ToInt32(x), Convert.ToInt32(y), Convert.ToInt32(width), Convert.ToInt32(height))
+        public Rectangle(double x, double y, double width, double height) : this(Convert.ToInt32(x), Convert.ToInt32(y), Convert.ToInt32(width), Convert.ToInt32(height))
         {
-
         }
-
 
         public int X { get; }
         public int Y { get; }

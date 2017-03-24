@@ -1,11 +1,9 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Media.Imaging;
-using Rectangle = AutoClicker.Model.Rectangle;
 
-namespace AutoClicker.Interface.Inputs
+namespace AutoClicker.Model.Abstraction.Interface.Inputs
 {
-    interface IScreenMaker
+    internal interface IScreenMaker
     {
         BitmapSource GetBitmapSourceFromScreen();
         Bitmap GetBitmapFromScreen();

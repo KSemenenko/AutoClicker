@@ -1,31 +1,29 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
+using AutoClicker.Model.Abstraction.Interface.Inputs;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using Rectangle = AutoClicker.Model.Rectangle;
-using AutoClicker.Interface.Inputs;
 
 namespace AutoClicker.Model.Inputs
 {
-    class ImageSearch : IImageSearch
+    internal class ImageSearch : IImageSearch
     {
         public Rectangle Search(Bitmap image, Bitmap sample, double accuracy = 0.9)
         {
-            Image<Bgr, byte> template = new Image<Bgr, byte>(image); // Image A
-            Image<Bgr, byte> source = new Image<Bgr, byte>(sample); // Image B
+            var template = new Image<Bgr, byte>(image); // Image A
+            var source = new Image<Bgr, byte>(sample); // Image B
 
-            using (Image<Gray, float> result = source.MatchTemplate(template, TemplateMatchingType.CcoeffNormed))
+            using(var result = source.MatchTemplate(template, TemplateMatchingType.CcoeffNormed))
             {
                 double[] minValues, maxValues;
                 Point[] minLocations, maxLocations;
                 result.MinMax(out minValues, out maxValues, out minLocations, out maxLocations);
 
                 // You can try different values of the threshold. I guess somewhere between 0.75 and 0.95 would be good.
-                if (maxValues[0] > accuracy) //0.5
+                if(maxValues[0] > accuracy) //0.5
                 {
                     // This is a match. Do something with it, for example draw a rectangle around it.
-                    System.Drawing.Rectangle match = new System.Drawing.Rectangle(maxLocations[0], template.Size);
+                    var match = new System.Drawing.Rectangle(maxLocations[0], template.Size);
                     return Rectangle.From(match);
                 }
             }

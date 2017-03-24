@@ -1,9 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace AutoClicker.Interface
+namespace AutoClicker.Model.Abstraction.Interface
 {
-    interface IImageSource
+    internal interface IImageSource
     {
         Bitmap Source { get; set; }
     }

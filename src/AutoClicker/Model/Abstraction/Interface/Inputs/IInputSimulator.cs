@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace AutoClicker.Interface.Inputs
+﻿namespace AutoClicker.Model.Abstraction.Interface.Inputs
 {
-    interface IInputSimulator
+    internal interface IInputSimulator
     {
         void MouseLeftButtonClick(int x, int y);
         void MouseLeftButtonDoubleClick(int x, int y);

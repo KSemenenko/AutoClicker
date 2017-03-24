@@ -11,7 +11,7 @@ namespace AutoClicker.Model.Abstraction.Interface
 
     public interface ITestResult
     {
-        List<ITestResult> StackTrace { get; set; } 
-        ResulType Result { get; set; } 
+        List<ITestResult> StackTrace { get; set; }
+        ResulType Result { get; set; }
     }
 }

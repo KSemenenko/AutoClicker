@@ -1,10 +1,9 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace AutoClicker.Interface.Inputs
+namespace AutoClicker.Model.Abstraction.Interface.Inputs
 {
-    interface IImageSearch
+    internal interface IImageSearch
     {
-        Model.Rectangle Search(Bitmap image, Bitmap sample, double accuracy = 0.9);
+        Rectangle Search(Bitmap image, Bitmap sample, double accuracy = 0.9);
     }
 }
