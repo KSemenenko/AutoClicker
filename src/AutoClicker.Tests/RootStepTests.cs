@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace AutoClicker.Tests
 {
     [TestFixture]
-    public class RootStepTest
+    public class RootStepTests
     {
         [Test]
         public void NullRefExeptionTest()
