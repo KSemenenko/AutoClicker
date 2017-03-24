@@ -4,8 +4,9 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Rectangle = AutoClicker.Model.Rectangle;
+using AutoClicker.Interface.Inputs;
 
-namespace AutoClicker.Inputs
+namespace AutoClicker.Model.Inputs
 {
     class ImageSearch : IImageSearch
     {

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Media.Imaging;
 using Rectangle = AutoClicker.Model.Rectangle;
 
-namespace AutoClicker.Inputs
+namespace AutoClicker.Interface.Inputs
 {
     interface IScreenMaker
     {

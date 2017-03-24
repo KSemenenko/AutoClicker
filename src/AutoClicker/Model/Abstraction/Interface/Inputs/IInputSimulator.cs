@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutoClicker.Inputs
+namespace AutoClicker.Interface.Inputs
 {
     interface IInputSimulator
     {
