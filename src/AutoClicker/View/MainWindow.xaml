@@ -136,9 +136,12 @@
             <GridSplitter Grid.Row="0" Grid.Column="1" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
              
             <Grid Grid.Column="2">
-                
+
+
             </Grid>
 
         </Grid>
+
+       
     </Grid>
 </Window>

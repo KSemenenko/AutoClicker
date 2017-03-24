@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Rectangle = AutoClicker.Model.Rectangle;
 
 namespace AutoClicker.Model.Inputs
 {
@@ -24,7 +25,8 @@ namespace AutoClicker.Model.Inputs
                 using (var bmpGraphics = Graphics.FromImage(screenBmp))
                 {
                     bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
-                    return Imaging.CreateBitmapSourceFromHBitmap(screenBmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    return Imaging.CreateBitmapSourceFromHBitmap(screenBmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
                 }
             }
         }
@@ -40,6 +42,29 @@ namespace AutoClicker.Model.Inputs
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 g.CopyFromScreen((int) screenLeft, (int) screenTop, 0, 0, bmp.Size);
+                return bmp;
+            }
+        }
+
+        public BitmapSource GetBitmapSourceFromScreen(Rectangle rectangle)
+        {
+            using (var screenBmp = new Bitmap(rectangle.Width, rectangle.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            {
+                using (var bmpGraphics = Graphics.FromImage(screenBmp))
+                {
+                    bmpGraphics.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, new System.Drawing.Size(rectangle.Width, rectangle.Height));
+                    return Imaging.CreateBitmapSourceFromHBitmap(screenBmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
+                }
+            }
+        }
+
+        public Bitmap GetBitmapFromScreen(Rectangle rectangle)
+        {
+            Bitmap bmp = new Bitmap(rectangle.Width, rectangle.Height);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, bmp.Size);
                 return bmp;
             }
         }

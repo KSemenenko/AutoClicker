@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace AutoClicker.Model
 {
@@ -12,12 +9,20 @@ namespace AutoClicker.Model
         {
             X = x;
             Y = y;
+
             Width = width;
             Height = height;
 
             CenterX = Width / 2 + X;
             CenterY = Height / 2 + Y;
         }
+
+        public Rectangle(double x, double y, double width, double height) 
+            :this(Convert.ToInt32(x), Convert.ToInt32(y), Convert.ToInt32(width), Convert.ToInt32(height))
+        {
+
+        }
+
 
         public int X { get; }
         public int Y { get; }
@@ -34,7 +39,10 @@ namespace AutoClicker.Model
         {
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
+
+        public static Rectangle From(Rect rect)
+        {
+            return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+        }
     }
 }
-
-

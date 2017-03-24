@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Rectangle = AutoClicker.Model.Rectangle;
 
 namespace AutoClicker.Interface.Inputs
 {
@@ -12,5 +9,7 @@ namespace AutoClicker.Interface.Inputs
     {
         BitmapSource GetBitmapSourceFromScreen();
         Bitmap GetBitmapFromScreen();
+        BitmapSource GetBitmapSourceFromScreen(Rectangle rectangle);
+        Bitmap GetBitmapFromScreen(Rectangle rectangle);
     }
 }
