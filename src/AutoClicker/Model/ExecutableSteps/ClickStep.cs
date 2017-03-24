@@ -1,6 +1,7 @@
 ﻿using System; 
 using AutoClicker.Interface;
 using AutoClicker.Model.Abstraction;
+using AutoClicker.Model.Abstraction.Interface;
 
 namespace AutoClicker.Model.ExecutableSteps
 {

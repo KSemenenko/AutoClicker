@@ -6,7 +6,8 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using AutoClicker.Inputs;
+using AutoClicker.Interface.Inputs;
+using AutoClicker.Model.Inputs;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace AutoClicker.View

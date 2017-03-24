@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoClicker.Interface;
+using AutoClicker.Model.Abstraction.Interface;
 
 namespace AutoClicker.Model.Abstraction
 {
