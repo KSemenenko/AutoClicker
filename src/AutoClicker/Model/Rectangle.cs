@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoClicker.Model
 {
@@ -12,6 +8,7 @@ namespace AutoClicker.Model
         {
             X = x;
             Y = y;
+
             Width = width;
             Height = height;
 
@@ -36,5 +33,3 @@ namespace AutoClicker.Model
         }
     }
 }
-
-

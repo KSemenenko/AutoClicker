@@ -44,25 +44,25 @@ namespace AutoClicker.Inputs
             }
         }
 
-        public BitmapSource GetBitmapSourceFromScreen(int x, int y, int width, int height)
+        public BitmapSource GetBitmapSourceFromScreen(Model.Rectangle rectangle)
         {
-            using (var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            using (var screenBmp = new Bitmap(rectangle.Width, rectangle.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
             {
                 using (var bmpGraphics = Graphics.FromImage(screenBmp))
                 {
-                    bmpGraphics.CopyFromScreen(x, y, 0, 0, new System.Drawing.Size(width, height));
+                    bmpGraphics.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, new System.Drawing.Size(rectangle.Width, rectangle.Height));
                     return Imaging.CreateBitmapSourceFromHBitmap(screenBmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty,
                         BitmapSizeOptions.FromEmptyOptions());
                 }
             }
         }
 
-        public Bitmap GetBitmapFromScreen(int x, int y, int width, int height)
+        public Bitmap GetBitmapFromScreen(Model.Rectangle rectangle)
         {
-            Bitmap bmp = new Bitmap(width, height);
+            Bitmap bmp = new Bitmap(rectangle.Width, rectangle.Height);
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.CopyFromScreen(x, y, 0, 0, bmp.Size);
+                g.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, bmp.Size);
                 return bmp;
             }
         }
