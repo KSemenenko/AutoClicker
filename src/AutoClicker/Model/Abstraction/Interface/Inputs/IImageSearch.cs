@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace AutoClicker.Inputs
+namespace AutoClicker.Interface.Inputs
 {
     interface IImageSearch
     {

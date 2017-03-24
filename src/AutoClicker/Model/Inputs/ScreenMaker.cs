@@ -1,11 +1,12 @@
-﻿using System;
+﻿using AutoClicker.Interface.Inputs;
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace AutoClicker.Inputs
+namespace AutoClicker.Model.Inputs
 {
     class ScreenMaker : IScreenMaker
     {
