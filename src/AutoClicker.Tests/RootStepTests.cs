@@ -46,6 +46,19 @@ namespace AutoClicker.Tests
         }
 
         [Test]
+        public void TryAddRecursionTest()
+        {
+           
+            var rst = new RootStep("root");
+            var rst2 = new RootStep("root2");
+            var rst3 = new RootStep("root3");
+
+            rst.TryAddChild(rst2);
+            var result = rst3.TryAddChild(rst2); 
+            result.ShouldBeEquivalentTo(false); 
+        }
+
+        [Test]
         public void SucceededResult()
         {
             var child1 = Substitute.For<IExecutableStep>();

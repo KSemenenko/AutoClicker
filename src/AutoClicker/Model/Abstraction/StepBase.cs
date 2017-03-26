@@ -21,6 +21,10 @@ namespace AutoClicker.Model.Abstraction
 
         public virtual bool TryResetChild(IExecutableStep child, string rootId = null)
         {
+
+            if (child.Root != null)
+                return false;
+
             if (!string.IsNullOrEmpty(rootId))
             {
                 if (rootId == Id)
@@ -43,6 +47,9 @@ namespace AutoClicker.Model.Abstraction
         public bool TryAddChild(IExecutableStep child, string rootId = null)
         {
             if (child == null)
+                return false;
+
+            if (child.Root != null)
                 return false;
 
             if (string.IsNullOrEmpty(rootId))
@@ -138,22 +145,31 @@ namespace AutoClicker.Model.Abstraction
                 }
             return step;
         }
+        
+        private bool CheckAllChildsIsNotRecource(IExecutableStep child)
+        {
+            return child.FindExecutableStepById(Id) == null; 
+        }
 
         private bool ResetChild(IExecutableStep child)
-        {
-            for (var i = 0; i < _childs.Count; i++)
-                if (child.Id == _childs[i].Id)
-                {
-                    _childs[i] = child;
-                    return true;
-                }
+        { 
+            if (CheckAllChildsIsNotRecource(child))
+            {
+                for (var i = 0; i < _childs.Count; i++)
+                    if (child.Id == _childs[i].Id)
+                    {
+                        _childs[i] = child;
+                        child.Root = this;
+                        return true;
+                    }
+            } 
 
             return false;
         }
 
         private bool AddChild(IExecutableStep child)
-        {
-            if (FindExecutableStepById(child.Id) == null)
+        {  
+            if (CheckAllChildsIsNotRecource(child))
             {
                 _childs.Add(child);
                 child.Root = this;
