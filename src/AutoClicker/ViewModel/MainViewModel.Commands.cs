@@ -14,7 +14,7 @@ namespace AutoClicker.ViewModel
         private void BindCommands()
         {
             BindToPropertyChange(nameof(CurrentProject), nameof(SaveProjectCommand));
-            BindToPropertyChange(nameof(CurrentStep), nameof(AddNewNodeCommands));
+            BindToPropertyChange(nameof(CurrentStep), nameof(AddNodeCommands), nameof(RemoveNodeCommands));
 
         }
 
@@ -54,16 +54,39 @@ namespace AutoClicker.ViewModel
             }
         }
 
-        public ICommand AddNewNodeCommands
+        public ICommand AddNodeCommands
         {
             get
             {
                 return new DelegateCommand(executedParam =>
                 {
+                    //TODO: Fix it.
                     //CurrentStep.TryAddChild((IExecutableStep)executedParam);
-                    CurrentStep.TryAddChild(new RootStep(Guid.NewGuid().ToString()));
-                    CurrentStep.TryAddChild(new ClickStep(Guid.NewGuid().ToString(),MouseEventType.LeftClick, 4,null,null, "3434"));
-                    OnPropertyChanged(nameof(CurrentProjectSteps));
+                    
+
+                    if(CurrentStep.TryAddChild(new RootStep(Guid.NewGuid().ToString())))
+                    {
+                        CurrentStep.TryAddChild(new ClickStep(Guid.NewGuid().ToString(), MouseEventType.LeftClick, 4, null, null, "3434"));
+                        OnPropertyChanged(nameof(CurrentProjectSteps));
+                        OnPropertyChanged(nameof(CurrentStep));
+                    }
+                    
+                },
+                canExecutedParam => CurrentStep != null);
+            }
+        }
+        public ICommand RemoveNodeCommands
+        {
+            get
+            {
+                return new DelegateCommand(executedParam =>
+                {
+                    if(CurrentStep.TryRemoveChild(CurrentStep))
+                    {
+                        OnPropertyChanged(nameof(CurrentProjectSteps));
+                        OnPropertyChanged(nameof(CurrentStep));
+                    }
+
                 },
                 canExecutedParam => CurrentStep != null);
             }

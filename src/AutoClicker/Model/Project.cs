@@ -8,7 +8,7 @@ namespace AutoClicker.Model
     {
         public string Name { get; set; }
 
-        public ObservableCollection<IExecutableStep> Steps { get; set; } = new ObservableCollection<IExecutableStep>
+        public ObservableCollection<IExecutableStep> Roots { get; set; } = new ObservableCollection<IExecutableStep>
         {
             new RootStep("root")
         };

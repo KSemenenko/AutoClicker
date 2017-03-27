@@ -27,12 +27,12 @@ namespace AutoClicker.ViewModel
 
         public ObservableCollection<IExecutableStep> CurrentProjectSteps
         {
-            get { return CurrentProject?.Steps; }
+            get { return CurrentProject?.Roots; }
             set
             {
                 if(CurrentProject != null)
                 {
-                    CurrentProject.Steps = value;
+                    CurrentProject.Roots = value;
                 }
                 OnPropertyChanged();
             }

@@ -82,7 +82,8 @@
 
             </TreeView>
 
-            <Button Grid.Column="0" Content="+" VerticalAlignment="Bottom"  HorizontalAlignment="Right" ToolTip="Add an item" Command="{Binding AddNewNodeCommands}"/>
+            <Button Grid.Column="0" Content="+" VerticalAlignment="Bottom"  HorizontalAlignment="Left" ToolTip="Add an item" Command="{Binding AddNodeCommands}"/>
+            <Button Grid.Column="0" Content="-" VerticalAlignment="Bottom"  HorizontalAlignment="Right" ToolTip="Add an item" Command="{Binding RemoveNodeCommands}"/>
 
             <GridSplitter Grid.Row="0" Grid.Column="1" Width="5" VerticalAlignment="Stretch"
                           HorizontalAlignment="Center" />

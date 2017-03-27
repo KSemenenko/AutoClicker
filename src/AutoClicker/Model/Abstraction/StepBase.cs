@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AutoClicker.Model.Abstraction.Interface;
+using MVVMBase;
 
 namespace AutoClicker.Model.Abstraction
 {
-    public abstract class StepBase : IExecutableStep
+    public abstract class StepBase : /*BaseViewModel,*/ IExecutableStep
     {
         private readonly ObservableCollection<IExecutableStep> _childs = new ObservableCollection<IExecutableStep>();
         protected ITestResult Result = new TestResult();
@@ -83,14 +84,13 @@ namespace AutoClicker.Model.Abstraction
             if (_childs.Contains(child))
             {
                 _childs.Remove(child);
+                //OnPropertyChanged(nameof(Childs));
                 return true;
             }
 
             var step = FindExecutableStepById(child.Root.Id);
-            if (step?.Root != null)
-                return step.TryRemoveChild(child);
-
-            return false;
+           
+            return step.TryRemoveChild(child); 
         }
 
         public virtual ITestResult Execuite(bool isForced = false)
@@ -174,6 +174,7 @@ namespace AutoClicker.Model.Abstraction
             {
                 _childs.Add(child);
                 child.Root = this;
+                //OnPropertyChanged(nameof(Childs));
                 return true;
             }
             return false;
