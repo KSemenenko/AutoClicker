@@ -82,7 +82,21 @@
 
             </TreeView>
 
-            <Button Grid.Column="0" Content="+" VerticalAlignment="Bottom"  HorizontalAlignment="Left" ToolTip="Add an item" Command="{Binding AddNodeCommands}"/>
+
+            <materialDesign:PopupBox Grid.Column="0" Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}" VerticalAlignment="Bottom"  HorizontalAlignment="Left"
+                                         PlacementMode="TopAndAlignCentres" 
+                                         ToolTipService.Placement="Right"
+                                         ToolTip="STeps...">
+                <StackPanel>
+                    <Button Command="{Binding AddNodeCommands}" Content="Click Step" ToolTip="One with custom opacity" />
+                    <Button Command="{Binding AddNodeCommands}" Content="Wait Step" ToolTip="One with custom opacity" />
+                    <Button Command="{Binding AddNodeCommands}" Content="etc Step" ToolTip="One with custom opacity" />
+
+                </StackPanel>
+
+            </materialDesign:PopupBox>
+
+
             <Button Grid.Column="0" Content="-" VerticalAlignment="Bottom"  HorizontalAlignment="Right" ToolTip="Add an item" Command="{Binding RemoveNodeCommands}"/>
 
             <GridSplitter Grid.Row="0" Grid.Column="1" Width="5" VerticalAlignment="Stretch"
