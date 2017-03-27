@@ -113,6 +113,7 @@
     <Compile Include="Model\Abstraction\Interface\Inputs\IInputSimulator.cs" />
     <Compile Include="Model\Abstraction\Interface\ISearchPictureModule.cs" />
     <Compile Include="Model\Abstraction\Interface\ITestResult.cs" />
+    <Compile Include="Model\MouseEventModule.cs" />
     <Compile Include="Model\ExecutableSteps\SearchPictureModule.cs" />
     <Compile Include="Model\ExecutableSteps\SearchPictureStep.cs" />
     <Compile Include="Model\ExecutableSteps\ClickStep.cs" />

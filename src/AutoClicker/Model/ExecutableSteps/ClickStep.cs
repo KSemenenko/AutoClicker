@@ -12,11 +12,15 @@ namespace AutoClicker.Model.ExecutableSteps
         private readonly ISearchPictureModule _searchPicture;
         private readonly IMouseEventModule _clickModule;
         private readonly string _name;
-        public ClickStep(string id, IMouseEventModule clickModule, ISearchPictureModule searchPictureModule, string name) : base(id)
+        private MouseEventType _type;
+        private readonly uint _count;
+        public ClickStep(string id, MouseEventType type, uint count, ISearchPictureModule searchPictureModule, string name) : base(id)
         {
             _name = name;
             _searchPicture = searchPictureModule;
-            _clickModule = clickModule;
+            _clickModule = new MouseEventModule();
+            _type = type;
+            _count = count;
         }
 
         public override AggregateException GetValidateException()
@@ -37,17 +41,18 @@ namespace AutoClicker.Model.ExecutableSteps
 
             if (rect.Equals(Rectangle.Empty))
             {
-                Result.Result = ResulType.Warning;
+                Result.Result = ResulType.Warning; 
+                rect = _searchPicture.SearchPicture(_name, 0.8);
             }
-
-            rect = _searchPicture.SearchPicture(_name, 0.8);
+             
             if (rect.Equals(Rectangle.Empty))
             {
                 Result.Result = ResulType.Failed;
             }
             else
             {
-                _clickModule.Execuite(MouseEventType.LeftClick, new Point(rect.CenterX, rect.CenterY));
+                _clickModule.Execuite(MouseEventType.Move, new Point(rect.CenterX, rect.CenterY));
+                _clickModule.Execuite(_type, count: _count); 
                 base.Execuite();
             }
 

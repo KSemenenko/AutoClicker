@@ -15,14 +15,16 @@ namespace AutoClicker.Model.Abstraction.Interface
         LeftUp,
         RightDown,
         RightUp,
+        MiddleDown,
+        MiddleUp,
         LeftClick,
-        RightClick 
+        RightClick,
+        MiddleClick,
+        ScrollWheel
     }
 
     public interface IMouseEventModule
-    {
-        IInputSimulator InputSimulator { get; }
-
-        void Execuite(MouseEventType eventType, Point point);
+    {  
+        void Execuite(MouseEventType eventType, Point point = default(Point), float wheelDelta = 0, uint count = 1);
     }
 }
