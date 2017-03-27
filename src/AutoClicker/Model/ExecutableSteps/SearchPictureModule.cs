@@ -9,25 +9,24 @@ namespace AutoClicker.Model.ExecutableSteps
     {
         protected readonly IImageSearch _imageSearch;
         protected readonly IScreenMaker _screenMaker;
+        protected readonly IFileStore _fileStore;
 
-        public SearchPictureModule(IImageSearch imageSearch, IScreenMaker screenMaker)
+        public SearchPictureModule(IImageSearch imageSearch, IScreenMaker screenMaker, IFileStore fileStore)
         {
             _imageSearch = imageSearch;
-            _screenMaker = screenMaker; 
+            _screenMaker = screenMaker;
+            _fileStore = fileStore;
         }
 
         public Rectangle SearchPicture(string name, double accuracy = 0.9)
         {
-            //TODO: Kos FIIX
-            //if(!File.Exists(name)) 
-            //    return Rectangle.Empty;
+            if (!_fileStore.FileExist(name))
+            {
+                return Rectangle.Empty;
+            }
 
             var screen = _screenMaker.GetBitmapFromScreen();
-            //TODO: Kos FIIX
-            /*
-            var sample = Bitmap.FromFile(name) as Bitmap; // found by name
-            */
-            Bitmap sample = null;
+            Bitmap sample = _fileStore.LoadImageFromFile(name);
             var rect = _imageSearch.Search(screen, sample, accuracy);
 
             return rect;
