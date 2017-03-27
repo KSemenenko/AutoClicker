@@ -108,6 +108,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\Abstraction\Interface\IClickModule.cs" />
     <Compile Include="Model\Abstraction\Interface\IExecutableStep.cs" />
+    <Compile Include="Model\Abstraction\Interface\IFileStore.cs" />
     <Compile Include="Model\Abstraction\Interface\IImageSource.cs" />
     <Compile Include="Model\Abstraction\Interface\Inputs\IInputSimulator.cs" />
     <Compile Include="Model\Abstraction\Interface\ISearchPictureModule.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Model\ExecutableSteps\RootStep.cs" />
     <Compile Include="Model\ExecutableSteps\WaitPictureStep.cs" />
     <Compile Include="Model\ExecutableSteps\WaitStep.cs" />
+    <Compile Include="Model\FileStore.cs" />
     <Compile Include="Model\IImageSource.cs" />
     <Compile Include="Model\Inputs\ImageSearch.cs" />
     <Compile Include="Model\Inputs\InputSimulator.cs" />

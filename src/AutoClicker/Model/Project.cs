@@ -1,6 +1,9 @@
-﻿namespace AutoClicker.Model
+﻿using AutoClicker.Model.Abstraction.Interface;
+
+namespace AutoClicker.Model
 {
-    internal class Project
+    public class Project
     {
+        public string Name { get; set; }
     }
 }

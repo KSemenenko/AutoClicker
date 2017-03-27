@@ -75,6 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="FileStoreTests.cs" />
     <Compile Include="SearchPictureStepTests.cs" />
     <Compile Include="TestResultTests.cs" />
     <Compile Include="WaitStepTests.cs" />

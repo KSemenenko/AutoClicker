@@ -44,11 +44,24 @@ namespace AutoClicker.Model
 
         public bool Equals(Rectangle other)
         {
+            if (other == null)
+                return false;
+
             return (X == other.X && Y == other.Y && Width == other.Width && Height == other.Height);
         }
 
         public static bool operator ==(Rectangle a, Rectangle b)
         {
+            if (ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
+            }
+
             return (a.X == b.X && a.Y == b.Y && a.Width == b.Width && a.Height == b.Height);
         }
 
