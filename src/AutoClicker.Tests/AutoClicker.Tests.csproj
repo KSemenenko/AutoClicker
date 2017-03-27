@@ -78,6 +78,7 @@
     <Compile Include="FileStoreTests.cs" />
     <Compile Include="SearchPictureStepTests.cs" />
     <Compile Include="TestResultTests.cs" />
+    <Compile Include="WaitPictureStepTest.cs" />
     <Compile Include="WaitStepTests.cs" />
     <Compile Include="RootStepTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,9 +11,9 @@ namespace AutoClicker.Model.ExecutableSteps
 {
     public class SearchPictureStep : StepBase
     {
-        private readonly ISearchPictureModule _searchPicture;
-        private readonly string _name;
-        private readonly IFileStore _fileStore;
+        protected readonly ISearchPictureModule _searchPicture;
+        protected readonly string _name;
+        protected readonly IFileStore _fileStore;
         public SearchPictureStep(string id, ISearchPictureModule searchPictureModule, IFileStore fileStore, string name) : base(id)
         {
             _name = name;
@@ -41,13 +41,13 @@ namespace AutoClicker.Model.ExecutableSteps
         {
             var rect = _searchPicture.SearchPicture(_name);
 
-            if(rect.Equals(Rectangle.Empty))
+            if(rect == Rectangle.Empty)
             {
                 Result.Result = ResulType.Warning;
             }
 
             rect = _searchPicture.SearchPicture(_name, 0.8);
-            if (rect.Equals(Rectangle.Empty))
+            if (rect == Rectangle.Empty)
             {
                 Result.Result = ResulType.Failed;
             }

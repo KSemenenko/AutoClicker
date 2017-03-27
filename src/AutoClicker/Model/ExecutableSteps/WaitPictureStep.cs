@@ -15,15 +15,28 @@ namespace AutoClicker.Model.ExecutableSteps
         }
 
         public override ITestResult Execuite(bool isForced = false)
-        { 
+        {
+            Rectangle rect = Rectangle.Empty;
             while(_countTry != 0)
-            { 
-                if(Result.Result != ResulType.Failed)
-                { 
-                 break;
+            {
+                rect = _searchPicture.SearchPicture(_name);
+
+                if(rect == Rectangle.Empty)
+                {
+                    _countTry--;
+                    Thread.Sleep(_delay);
                 }
-                _countTry--;
-                Thread.Sleep(_delay);
+                else
+                {
+                    base.Execuite();
+                    break;
+                }
+               
+            }
+
+            if (rect == Rectangle.Empty)
+            {
+                Result.Result = ResulType.Failed;
             }
 
             return Result;
