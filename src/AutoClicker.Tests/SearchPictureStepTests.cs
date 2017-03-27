@@ -23,10 +23,18 @@ namespace AutoClicker.Tests
 
             var screenMaker = Substitute.For<IScreenMaker>();
             screenMaker.GetBitmapFromScreen().Returns(Resources.horse);
-            var searchModule = new SearchPictureModule(imageSearch, screenMaker);
-            var step = new SearchPictureStep("id", searchModule, "horse");
+
+
+            var fileStore = Substitute.For<IFileStore>();
+            fileStore.FileExist(Arg.Is("horse")).Returns(true);
+            fileStore.LoadImageFromFile(Arg.Is("horse")).Returns(Resources.horse);
+
+            var searchModule = new SearchPictureModule(imageSearch, screenMaker, fileStore);
+            var step = new SearchPictureStep("id", searchModule, fileStore, "horse");
 
             step.Execuite().Result.ShouldBeEquivalentTo(ResulType.Failed);
+            fileStore.Received().FileExist("horse");
+            fileStore.Received().LoadImageFromFile("horse");
         }
 
         [Test]
@@ -40,10 +48,16 @@ namespace AutoClicker.Tests
             var screenMaker = Substitute.For<IScreenMaker>();
             screenMaker.GetBitmapFromScreen().Returns(Resources.horse);
 
-            var searchModule = new SearchPictureModule(imageSearch, screenMaker);
-            var step = new SearchPictureStep("id", searchModule, "horse"); 
+            var fileStore = Substitute.For<IFileStore>();
+            fileStore.FileExist(Arg.Is("horse")).Returns(true);
+            fileStore.LoadImageFromFile(Arg.Is("horse")).Returns(Resources.horse);
+
+            var searchModule = new SearchPictureModule(imageSearch, screenMaker, fileStore);
+            var step = new SearchPictureStep("id", searchModule, fileStore, "horse"); 
             
             step.Execuite().Result.ShouldBeEquivalentTo(ResulType.Succeeded);
+            fileStore.Received().FileExist("horse");
+            fileStore.Received().LoadImageFromFile("horse");
         }
 
         [Test]
@@ -57,10 +71,16 @@ namespace AutoClicker.Tests
             var screenMaker = Substitute.For<IScreenMaker>();
             screenMaker.GetBitmapFromScreen().Returns(Resources.horse);
 
-            var searchModule = new SearchPictureModule(imageSearch, screenMaker);
-            var step = new SearchPictureStep("id", searchModule, "horse");
+            var fileStore = Substitute.For<IFileStore>();
+            fileStore.FileExist(Arg.Is("horse")).Returns(true);
+            fileStore.LoadImageFromFile(Arg.Is("horse")).Returns(Resources.horse);
+
+            var searchModule = new SearchPictureModule(imageSearch, screenMaker, fileStore);
+            var step = new SearchPictureStep("id", searchModule, fileStore, "horse");
 
             step.Execuite().Result.ShouldBeEquivalentTo(ResulType.Warning);
+            fileStore.Received().FileExist("horse");
+            fileStore.Received().LoadImageFromFile("horse");
         }
     }
 }

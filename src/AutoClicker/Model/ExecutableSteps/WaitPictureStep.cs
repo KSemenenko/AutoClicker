@@ -8,7 +8,7 @@ namespace AutoClicker.Model.ExecutableSteps
     {
         private readonly TimeSpan _delay;
         private int _countTry;
-        public WaitPictureStep(string id, uint countTry, TimeSpan time, ISearchPictureModule searchPictureModule, string name) : base(id, searchPictureModule, name)
+        public WaitPictureStep(string id, uint countTry, TimeSpan time, ISearchPictureModule searchPictureModule, IFileStore fileStore, string name) : base(id, searchPictureModule, fileStore, name)
         {
             _delay = time;
             _countTry = (int)countTry;
