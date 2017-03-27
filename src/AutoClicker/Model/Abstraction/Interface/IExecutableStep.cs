@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 /*
  *  
@@ -18,7 +19,7 @@ namespace AutoClicker.Model.Abstraction.Interface
     {
         string Id { get; }
         IExecutableStep Root { get; set; }
-        IEnumerable<IExecutableStep> Childs { get; }
+        ObservableCollection<IExecutableStep> Childs { get; }
         ITestResult Execuite(bool isForced = false);
 
         /// <summary>

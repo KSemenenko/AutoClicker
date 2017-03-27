@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using AutoClicker.Model.Abstraction.Interface;
 
@@ -7,7 +8,7 @@ namespace AutoClicker.Model.Abstraction
 {
     public abstract class StepBase : IExecutableStep
     {
-        private readonly List<IExecutableStep> _childs = new List<IExecutableStep>();
+        private readonly ObservableCollection<IExecutableStep> _childs = new ObservableCollection<IExecutableStep>();
         protected ITestResult Result = new TestResult();
 
         protected StepBase(string id)
@@ -15,7 +16,7 @@ namespace AutoClicker.Model.Abstraction
             Id = id;
         }
 
-        public IEnumerable<IExecutableStep> Childs => _childs;
+        public ObservableCollection<IExecutableStep> Childs => _childs;
         public string Id { get; }
         public IExecutableStep Root { get; set; }
 

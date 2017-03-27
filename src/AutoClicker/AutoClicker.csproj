@@ -132,6 +132,8 @@
     <Compile Include="Model\TestResult.cs" />
     <Compile Include="Telemetry\ITelemetryClient.cs" />
     <Compile Include="Telemetry\TelemetryClient.cs" />
+    <Compile Include="ViewModel\MainViewModel.Properties.cs" />
+    <Compile Include="ViewModel\MainViewModel.Commands.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
