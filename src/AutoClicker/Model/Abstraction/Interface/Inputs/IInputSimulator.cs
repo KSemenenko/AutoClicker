@@ -1,6 +1,6 @@
 ﻿namespace AutoClicker.Model.Abstraction.Interface.Inputs
 {
-    internal interface IInputSimulator
+    public interface IInputSimulator
     {
         void MouseLeftButtonClick(int x, int y);
         void MouseLeftButtonDoubleClick(int x, int y);
