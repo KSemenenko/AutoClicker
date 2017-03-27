@@ -109,6 +109,7 @@
     <Compile Include="Model\Abstraction\Interface\IExecutableStep.cs" />
     <Compile Include="Model\Abstraction\Interface\IImageSource.cs" />
     <Compile Include="Model\Abstraction\Interface\Inputs\IInputSimulator.cs" />
+    <Compile Include="Model\Abstraction\Interface\Interface1.cs" />
     <Compile Include="Model\Abstraction\Interface\ITestResult.cs" />
     <Compile Include="Model\ExecutableSteps\SearchPictureModule.cs" />
     <Compile Include="Model\ExecutableSteps\SearchPictureStep.cs" />

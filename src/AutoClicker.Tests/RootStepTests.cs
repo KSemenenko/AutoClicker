@@ -18,7 +18,7 @@ namespace AutoClicker.Tests
             var child1 = Substitute.For<IExecutableStep>();
             var result = Substitute.For<ITestResult>();
             var result2 = Substitute.For<ITestResult>();
-
+            child1.Root = null;
             result.Result.Returns(ResulType.Warning);
             result2.Result.Returns(ResulType.Failed);
 
@@ -26,7 +26,7 @@ namespace AutoClicker.Tests
 
             var child2 = Substitute.For<IExecutableStep>();
             child2.Execuite().Returns(result2);
-
+            child2.Root = null;
             child1.FindExecutableStepById(Arg.Any<string>()).ReturnsNull();
             child2.FindExecutableStepById(Arg.Any<string>()).ReturnsNull();
             child1.TryGetStepById(Arg.Any<string>()).ReturnsNull();
@@ -275,6 +275,10 @@ namespace AutoClicker.Tests
             child2.TryGetStepById(Arg.Any<string>()).ReturnsNull();
             child3.TryGetStepById(Arg.Any<string>()).ReturnsNull();
 
+            child1.Root = null;
+            child2.Root = null;
+            child3.Root = null;
+
             var rst = new RootStep("root");
             rst.TryAddChild(child1);
             rst.TryAddChild(child2);
@@ -308,6 +312,9 @@ namespace AutoClicker.Tests
             child2.TryGetStepById(Arg.Any<string>()).ReturnsNull();
             child1.Execuite().Returns(result);
             child2.Execuite().Returns(result2);
+
+            child1.Root = null;
+            child2.Root = null; 
 
             var rst = new RootStep("root");
             rst.TryAddChild(child1);

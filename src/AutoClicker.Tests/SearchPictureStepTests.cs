@@ -23,8 +23,8 @@ namespace AutoClicker.Tests
 
             var screenMaker = Substitute.For<IScreenMaker>();
             screenMaker.GetBitmapFromScreen().Returns(Resources.horse);
-
-            var step = new SearchPictureStep("id", imageSearch, screenMaker, Resources.horse);
+            var searchModule = new SearchPictureModule(imageSearch, screenMaker);
+            var step = new SearchPictureStep("id", searchModule, "horse");
 
             step.Execuite().Result.ShouldBeEquivalentTo(ResulType.Failed);
         }
@@ -40,7 +40,8 @@ namespace AutoClicker.Tests
             var screenMaker = Substitute.For<IScreenMaker>();
             screenMaker.GetBitmapFromScreen().Returns(Resources.horse);
 
-            var step = new SearchPictureStep("id", imageSearch, screenMaker, Resources.horse);
+            var searchModule = new SearchPictureModule(imageSearch, screenMaker);
+            var step = new SearchPictureStep("id", searchModule, "horse"); 
             
             step.Execuite().Result.ShouldBeEquivalentTo(ResulType.Succeeded);
         }
@@ -51,12 +52,13 @@ namespace AutoClicker.Tests
             var rect1 = new Rectangle(0, 0, 100, 100);
 
             var imageSearch = Substitute.For<IImageSearch>();
-            imageSearch.Search(Arg.Any<Bitmap>(), Arg.Any<Bitmap>(), 1).Returns(Rectangle.Empty);
+            imageSearch.Search(Arg.Any<Bitmap>(), Arg.Any<Bitmap>()).Returns(Rectangle.Empty);
             imageSearch.Search(Arg.Any<Bitmap>(), Arg.Any<Bitmap>(), 0.8).Returns(rect1);
             var screenMaker = Substitute.For<IScreenMaker>();
             screenMaker.GetBitmapFromScreen().Returns(Resources.horse);
 
-            var step = new SearchPictureStep("id", imageSearch, screenMaker, Resources.horse);
+            var searchModule = new SearchPictureModule(imageSearch, screenMaker);
+            var step = new SearchPictureStep("id", searchModule, "horse");
 
             step.Execuite().Result.ShouldBeEquivalentTo(ResulType.Warning);
         }

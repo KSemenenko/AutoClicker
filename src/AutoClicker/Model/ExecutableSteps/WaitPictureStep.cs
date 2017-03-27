@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
-using AutoClicker.Model.Abstraction;
 using AutoClicker.Model.Abstraction.Interface;
-using AutoClicker.Model.Abstraction.Interface.Inputs;
 
 namespace AutoClicker.Model.ExecutableSteps
 {
@@ -11,7 +8,7 @@ namespace AutoClicker.Model.ExecutableSteps
     {
         private readonly TimeSpan _delay;
         private readonly int _countTry;
-        public WaitPictureStep(string id, uint countTry, TimeSpan time, IImageSearch imageSearch, IScreenMaker screenMaker, Bitmap sample) : base(id, imageSearch, screenMaker, sample)
+        public WaitPictureStep(string id, uint countTry, TimeSpan time, ISearchPictureModule searchPictureModule, string name) : base(id, searchPictureModule, name)
         {
             _delay = time;
             _countTry = (int)countTry;

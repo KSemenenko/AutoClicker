@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.IO;
+using AutoClicker.Model.Abstraction.Interface;
 using AutoClicker.Model.Abstraction.Interface.Inputs;
 
 namespace AutoClicker.Model.ExecutableSteps
 {
-    public class SearchPictureModule
+    public class SearchPictureModule : ISearchPictureModule
     {
         protected readonly IImageSearch _imageSearch;
-        protected readonly Bitmap _sample;
         protected readonly IScreenMaker _screenMaker;
 
-        public SearchPictureModule(IImageSearch imageSearch, IScreenMaker screenMaker, Bitmap sample)
+        public SearchPictureModule(IImageSearch imageSearch, IScreenMaker screenMaker)
         {
             _imageSearch = imageSearch;
-            _screenMaker = screenMaker;
-            _sample = sample;
+            _screenMaker = screenMaker; 
         }
 
-        public Rectangle SearchPicture(double accuracy = 1)
+        public Rectangle SearchPicture(string name, double accuracy = 0.9)
         {
+            //TODO: Kos FIIX
+            //if(!File.Exists(name)) 
+            //    return Rectangle.Empty;
+
             var screen = _screenMaker.GetBitmapFromScreen();
-            var rect = _imageSearch.Search(screen, _sample, accuracy);
-            
+            //TODO: Kos FIIX
+            /*
+            var sample = Bitmap.FromFile(name) as Bitmap; // found by name
+            */
+            Bitmap sample = null;
+            var rect = _imageSearch.Search(screen, sample, accuracy);
+
             return rect;
+           
         }
     }
 }
