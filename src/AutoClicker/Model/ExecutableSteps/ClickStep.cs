@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using AutoClicker.Model.Abstraction;
 using AutoClicker.Model.Abstraction.Interface;
 using AutoClicker.Model.Abstraction.Interface.Inputs;
@@ -11,23 +12,28 @@ namespace AutoClicker.Model.ExecutableSteps
     {
         private readonly ISearchPictureModule _searchPicture;
         private readonly IMouseEventModule _clickModule;
+        private readonly IFileStore _fileStore;
         private readonly string _name;
         private MouseEventType _type;
         private readonly uint _count;
-        public ClickStep(string id, MouseEventType type, uint count, ISearchPictureModule searchPictureModule, string name) : base(id)
+        public ClickStep(string id, MouseEventType type, uint count, ISearchPictureModule searchPictureModule, IFileStore fileStore, string name) : base(id)
         {
             _name = name;
             _searchPicture = searchPictureModule;
             _clickModule = new MouseEventModule();
             _type = type;
             _count = count;
+            _fileStore = fileStore;
         }
 
         public override AggregateException GetValidateException()
         {
             var exeptions = new List<Exception>();
 
-            //TODO : Kos add exeption if file don't exist
+            if (!_fileStore.FileExist(_name))
+            {
+                exeptions.Add(new FileNotFoundException(_name));
+            }
             var childEx = base.GetValidateException();
 
             exeptions.AddRange(childEx.InnerExceptions);
