@@ -61,12 +61,23 @@ namespace AutoClicker.Model.Inputs
 
         public Bitmap GetBitmapFromScreen(Rectangle rectangle)
         {
-            var bmp = new Bitmap(rectangle.Width, rectangle.Height);
-            using(var g = Graphics.FromImage(bmp))
+            try
             {
-                g.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, bmp.Size);
-                return bmp;
+                var bmp = new Bitmap(Math.Abs(rectangle.Width), Math.Abs(rectangle.Height));
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    g.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, bmp.Size);
+                    return bmp;
+                }
             }
+            catch(Exception ex)
+            {
+#if DEBUG
+                throw;
+#endif
+                return null;
+            }
+            
         }
     }
 }

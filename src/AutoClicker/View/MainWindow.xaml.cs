@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
+using AutoClicker.Model;
 using AutoClicker.Model.Abstraction.Interface;
 using AutoClicker.Model.ExecutableSteps;
+using AutoClicker.Model.Inputs;
 using AutoClicker.ViewModel;
 
 namespace AutoClicker.View
@@ -17,7 +19,7 @@ namespace AutoClicker.View
         public MainWindow()
         {
             InitializeComponent();
-            model = new MainViewModel();
+            model = new MainViewModel(this, new SearchPictureModule(new ImageSearch(), new ScreenMaker(), new FileStore()), new FileStore());
             DataContext = model;
         }
 

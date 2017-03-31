@@ -9,7 +9,7 @@ using MVVMBase;
 
 namespace AutoClicker.ViewModel
 {
-    internal partial class MainViewModel : BaseViewModel
+    public partial class MainViewModel : BaseViewModel
     {
         private void BindCommands()
         {
@@ -66,7 +66,8 @@ namespace AutoClicker.ViewModel
 
                     if(CurrentStep.TryAddChild(new RootStep(Guid.NewGuid().ToString())))
                     {
-                        CurrentStep.TryAddChild(new ClickStep(Guid.NewGuid().ToString(), MouseEventType.LeftClick, 4, null, null, "3434"));
+                        CurrentStep.TryAddChild(new ClickStep(Guid.NewGuid().ToString(), MouseEventType.LeftClick, 4, _searchPictureModule, _fileStore, Guid.NewGuid().ToString()));
+                        CurrentStep.TryAddChild(new SearchPictureStep(Guid.NewGuid().ToString(), _searchPictureModule, _fileStore, "img.png"));
                         OnPropertyChanged(nameof(CurrentProjectSteps));
                         OnPropertyChanged(nameof(CurrentStep));
                     }
@@ -75,6 +76,7 @@ namespace AutoClicker.ViewModel
                 canExecutedParam => CurrentStep != null);
             }
         }
+
         public ICommand RemoveNodeCommands
         {
             get
@@ -91,5 +93,7 @@ namespace AutoClicker.ViewModel
                 canExecutedParam => CurrentStep != null);
             }
         }
+
+
     }
 }
