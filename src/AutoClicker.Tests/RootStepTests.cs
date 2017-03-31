@@ -145,7 +145,7 @@ namespace AutoClicker.Tests
             rst.TryAddChild(child2, "innerRoot");
             rst.TryAddChild(child3, "innerRoot");
 
-            var result = rst.TryRemoveChild("4");
+            var result = rst.TryRemoveChild("badId");
 
             result.ShouldBeEquivalentTo(false);
         }
@@ -159,10 +159,17 @@ namespace AutoClicker.Tests
             var child1 = new RootStep("1");
             var child2 = new RootStep("2");
             var child3 = new RootStep("3");
+
+            var child4 = new RootStep("4");
+            var child5 = new RootStep("5");
+
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
             rst.TryAddChild(child2, "innerRoot");
             rst.TryAddChild(child3, "innerRoot");
+
+            child3.TryAddChild(child4);
+            child3.TryAddChild(child5);
 
             var result = rst.TryRemoveChild("3");
 
