@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AutoClicker.Tests
 {
     [TestFixture]
-    public class WaiSteptTest
+    public class WaiSteptTests
     {
         [Test]
         public void WaitStepExeptionTest()

@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Globalization;
+using System.Windows;
+using AutoClicker.Model.Abstraction.Interface;
+using AutoClicker.Model.ExecutableSteps;
 using AutoClicker.ViewModel;
 
 namespace AutoClicker.View
@@ -15,6 +19,11 @@ namespace AutoClicker.View
             InitializeComponent();
             model = new MainViewModel();
             DataContext = model;
+        }
+
+        private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            model.CurrentStep = e.NewValue as IExecutableStep;
         }
     }
 }

@@ -4,9 +4,9 @@ namespace AutoClicker.Model.Abstraction.Interface
 {
     public enum ResulType
     {
-        Succeeded,
-        Failed,
-        Warning
+        Succeeded = 0,
+        Warning = 1,
+        Failed = 2
     }
 
     public interface ITestResult

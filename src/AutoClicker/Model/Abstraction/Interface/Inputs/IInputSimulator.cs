@@ -1,12 +1,19 @@
 ﻿namespace AutoClicker.Model.Abstraction.Interface.Inputs
 {
-    internal interface IInputSimulator
+    public enum MuseKey
     {
-        void MouseLeftButtonClick(int x, int y);
-        void MouseLeftButtonDoubleClick(int x, int y);
+        Left,
+        Right,
+        Middle
+    }
+
+    public interface IInputSimulator
+    { 
+        void MouseButtonClick(MuseKey key, uint count = 1);
         void MoveMouseTo(int x, int y);
-        void MouseLeftButtonDown();
-        void MouseLeftButtonUp();
+        void MouseButtonDown(MuseKey key);
+        void MouseButtonUp(MuseKey key);
+        void MouseScroll(float wheelDelta);
         void TypeText(string text);
     }
 }

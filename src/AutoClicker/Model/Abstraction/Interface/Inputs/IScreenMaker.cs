@@ -3,7 +3,7 @@ using System.Windows.Media.Imaging;
 
 namespace AutoClicker.Model.Abstraction.Interface.Inputs
 {
-    internal interface IScreenMaker
+    public interface IScreenMaker
     {
         BitmapSource GetBitmapSourceFromScreen();
         Bitmap GetBitmapFromScreen();

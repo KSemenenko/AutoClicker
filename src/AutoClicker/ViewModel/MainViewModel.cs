@@ -1,8 +1,18 @@
-﻿using MVVMBase;
+﻿using System.Collections.ObjectModel;
+using AutoClicker.Model;
+using AutoClicker.Model.Abstraction.Interface;
+using MVVMBase;
 
 namespace AutoClicker.ViewModel
 {
-    internal class MainViewModel : BaseViewModel
+    internal partial class MainViewModel : BaseViewModel
     {
+        public MainViewModel()
+        {
+            BindProperties();
+            BindCommands();
+        }
+
+
     }
 }

@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace AutoClicker.Tests
 {
     [TestFixture]
-    public class RootStepTest
+    public class RootStepTests
     {
         [Test]
         public void NullRefExeptionTest()
@@ -18,7 +18,7 @@ namespace AutoClicker.Tests
             var child1 = Substitute.For<IExecutableStep>();
             var result = Substitute.For<ITestResult>();
             var result2 = Substitute.For<ITestResult>();
-
+            child1.Root = null;
             result.Result.Returns(ResulType.Warning);
             result2.Result.Returns(ResulType.Failed);
 
@@ -26,7 +26,7 @@ namespace AutoClicker.Tests
 
             var child2 = Substitute.For<IExecutableStep>();
             child2.Execuite().Returns(result2);
-
+            child2.Root = null;
             child1.FindExecutableStepById(Arg.Any<string>()).ReturnsNull();
             child2.FindExecutableStepById(Arg.Any<string>()).ReturnsNull();
             child1.TryGetStepById(Arg.Any<string>()).ReturnsNull();
@@ -43,6 +43,19 @@ namespace AutoClicker.Tests
             var aggregate = rst.GetValidateException();
 
             aggregate.InnerExceptions.Count.ShouldBeEquivalentTo(1);
+        }
+
+        [Test]
+        public void TryAddRecursionTest()
+        {
+           
+            var rst = new RootStep("root");
+            var rst2 = new RootStep("root2");
+            var rst3 = new RootStep("root3");
+
+            rst.TryAddChild(rst2);
+            var result = rst3.TryAddChild(rst2); 
+            result.ShouldBeEquivalentTo(false); 
         }
 
         [Test]
@@ -73,9 +86,9 @@ namespace AutoClicker.Tests
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
-            var child2 = new ClickStep("2");
-            var child3 = new ClickStep("3");
+            var child1 = new RootStep("1");
+            var child2 = new RootStep("2");
+            var child3 = new RootStep("3");
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
             rst.TryAddChild(child2, "innerRoot");
@@ -91,7 +104,7 @@ namespace AutoClicker.Tests
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
+            var child1 = new RootStep("1");
             rst.TryAddChild(rst2);
             var result = rst.TryAddChild(child1, "2");
             result.ShouldBeEquivalentTo(false);
@@ -103,9 +116,9 @@ namespace AutoClicker.Tests
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
-            var child2 = new ClickStep("2");
-            var child3 = new ClickStep("3");
+            var child1 = new RootStep("1");
+            var child2 = new RootStep("2");
+            var child3 = new RootStep("3");
 
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
@@ -123,16 +136,16 @@ namespace AutoClicker.Tests
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
-            var child2 = new ClickStep("2");
-            var child3 = new ClickStep("3");
+            var child1 = new RootStep("1");
+            var child2 = new RootStep("2");
+            var child3 = new RootStep("3");
 
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
             rst.TryAddChild(child2, "innerRoot");
             rst.TryAddChild(child3, "innerRoot");
 
-            var result = rst.TryRemoveChild("4");
+            var result = rst.TryRemoveChild("badId");
 
             result.ShouldBeEquivalentTo(false);
         }
@@ -143,13 +156,20 @@ namespace AutoClicker.Tests
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
-            var child2 = new ClickStep("2");
-            var child3 = new ClickStep("3");
+            var child1 = new RootStep("1");
+            var child2 = new RootStep("2");
+            var child3 = new RootStep("3");
+
+            var child4 = new RootStep("4");
+            var child5 = new RootStep("5");
+
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
             rst.TryAddChild(child2, "innerRoot");
             rst.TryAddChild(child3, "innerRoot");
+
+            child3.TryAddChild(child4);
+            child3.TryAddChild(child5);
 
             var result = rst.TryRemoveChild("3");
 
@@ -162,9 +182,9 @@ namespace AutoClicker.Tests
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
-            var child2 = new ClickStep("2");
-            var child3 = new ClickStep("3");
+            var child1 = new RootStep("1");
+            var child2 = new RootStep("2");
+            var child3 = new RootStep("3");
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
             rst.TryAddChild(child2, "innerRoot");
@@ -181,9 +201,9 @@ namespace AutoClicker.Tests
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
-            var child2 = new ClickStep("2");
-            var child3 = new ClickStep("3");
+            var child1 = new RootStep("1");
+            var child2 = new RootStep("2");
+            var child3 = new RootStep("3");
             var child4 = new RootStep("4");
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
@@ -201,9 +221,9 @@ namespace AutoClicker.Tests
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
-            var child2 = new ClickStep("2");
-            var child3 = new ClickStep("3");
+            var child1 = new RootStep("1");
+            var child2 = new RootStep("2");
+            var child3 = new RootStep("3");
             var child4 = new RootStep("3");
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
@@ -216,14 +236,14 @@ namespace AutoClicker.Tests
         }
 
         [Test]
-        public void TryResetSuccessedById()
+        public void TryResetSuccessedByID()
         {
             var rst = new RootStep("root");
             var rst2 = new RootStep("innerRoot");
 
-            var child1 = new ClickStep("1");
-            var child2 = new ClickStep("2");
-            var child3 = new ClickStep("3");
+            var child1 = new RootStep("1");
+            var child2 = new RootStep("2");
+            var child3 = new RootStep("3");
             var child4 = new RootStep("3");
             rst.TryAddChild(rst2);
             rst.TryAddChild(child1, "innerRoot");
@@ -262,6 +282,10 @@ namespace AutoClicker.Tests
             child2.TryGetStepById(Arg.Any<string>()).ReturnsNull();
             child3.TryGetStepById(Arg.Any<string>()).ReturnsNull();
 
+            child1.Root = null;
+            child2.Root = null;
+            child3.Root = null;
+
             var rst = new RootStep("root");
             rst.TryAddChild(child1);
             rst.TryAddChild(child2);
@@ -295,6 +319,9 @@ namespace AutoClicker.Tests
             child2.TryGetStepById(Arg.Any<string>()).ReturnsNull();
             child1.Execuite().Returns(result);
             child2.Execuite().Returns(result2);
+
+            child1.Root = null;
+            child2.Root = null; 
 
             var rst = new RootStep("root");
             rst.TryAddChild(child1);

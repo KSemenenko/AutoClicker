@@ -53,6 +53,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -69,8 +70,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="WaitStepTest.cs" />
-    <Compile Include="RootStepTest.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="FileStoreTests.cs" />
+    <Compile Include="SearchPictureStepTests.cs" />
+    <Compile Include="TestResultTests.cs" />
+    <Compile Include="WaitPictureStepTest.cs" />
+    <Compile Include="WaitStepTests.cs" />
+    <Compile Include="RootStepTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +91,15 @@
       <Project>{058815a5-7dce-4e30-9278-8e7471a60477}</Project>
       <Name>AutoClicker</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\horse.png" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
