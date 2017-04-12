@@ -13,8 +13,8 @@ namespace AutoClicker.ViewModel
     {
         private void BindCommands()
         {
-            BindToPropertyChange(nameof(CurrentProject), nameof(SaveProjectCommand));
-            BindToPropertyChange(nameof(CurrentStep), nameof(AddNodeCommands), nameof(RemoveNodeCommands));
+            Bind(nameof(CurrentProject)).To(nameof(SaveProjectCommand));
+            Bind(nameof(CurrentStep)).To(nameof(AddClickStepCommands)).To(nameof(AddSearchPictureStepCommands)).To(nameof(RemoveNodeCommands));
 
         }
 
@@ -54,24 +54,37 @@ namespace AutoClicker.ViewModel
             }
         }
 
-        public ICommand AddNodeCommands
+        public ICommand AddClickStepCommands
         {
             get
             {
                 return new DelegateCommand(executedParam =>
                 {
-                    //TODO: Fix it.
-                    //CurrentStep.TryAddChild((IExecutableStep)executedParam);
                     
-
-                    if(CurrentStep.TryAddChild(new RootStep(Guid.NewGuid().ToString())))
+                    if (CurrentStep.TryAddChild(new ClickStep(Guid.NewGuid().ToString(), MouseEventType.LeftClick, 4, _searchPictureModule, _fileStore, Guid.NewGuid().ToString())))
                     {
-                        CurrentStep.TryAddChild(new ClickStep(Guid.NewGuid().ToString(), MouseEventType.LeftClick, 4, _searchPictureModule, _fileStore, Guid.NewGuid().ToString()));
-                        CurrentStep.TryAddChild(new SearchPictureStep(Guid.NewGuid().ToString(), _searchPictureModule, _fileStore, "img.png"));
                         OnPropertyChanged(nameof(CurrentProjectSteps));
                         OnPropertyChanged(nameof(CurrentStep));
                     }
                     
+                },
+                canExecutedParam => CurrentStep != null);
+            }
+        }
+
+        public ICommand AddSearchPictureStepCommands
+        {
+            get
+            {
+                return new DelegateCommand(executedParam =>
+                {
+
+                    if (CurrentStep.TryAddChild(new SearchPictureStep(Guid.NewGuid().ToString(), _searchPictureModule, _fileStore, "img.png")))
+                    {
+                        OnPropertyChanged(nameof(CurrentProjectSteps));
+                        OnPropertyChanged(nameof(CurrentStep));
+                    }
+
                 },
                 canExecutedParam => CurrentStep != null);
             }

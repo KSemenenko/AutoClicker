@@ -11,7 +11,7 @@ namespace AutoClicker.ViewModel
       
         private void BindProperties()
         {
-            BindToPropertyChange(nameof(CurrentProject), nameof(CurrentProjectSteps));
+            Bind(nameof(CurrentProject)).To(nameof(CurrentProjectSteps));
         }
 
         private Project _currentProject;

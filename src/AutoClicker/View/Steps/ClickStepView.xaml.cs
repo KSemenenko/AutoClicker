@@ -30,7 +30,7 @@ namespace AutoClicker.View.Steps
         {
             InitializeComponent();
             _viewModel = model;
-            
+            DataContext = model;
         }
 
         private void TakePicture_OnClick(object sender, RoutedEventArgs e)

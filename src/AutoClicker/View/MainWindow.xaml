@@ -88,10 +88,8 @@
                                          ToolTipService.Placement="Right"
                                          ToolTip="STeps...">
                 <StackPanel>
-                    <Button Command="{Binding AddNodeCommands}" Content="Click Step" ToolTip="One with custom opacity" />
-                    <Button Command="{Binding AddNodeCommands}" Content="Wait Step" ToolTip="One with custom opacity" />
-                    <Button Command="{Binding AddNodeCommands}" Content="etc Step" ToolTip="One with custom opacity" />
-
+                    <Button Command="{Binding AddClickStepCommands}" Content="Click Step" ToolTip="One with custom opacity" />
+                    <Button Command="{Binding AddSearchPictureStepCommands}" Content="Search Step" ToolTip="One with custom opacity" />
                 </StackPanel>
 
             </materialDesign:PopupBox>
