@@ -15,8 +15,25 @@ namespace AutoClicker.ViewModel
         {
             Bind(nameof(CurrentProject)).To(nameof(SaveProjectCommand));
             Bind(nameof(CurrentStep)).To(nameof(AddClickStepCommands)).To(nameof(AddSearchPictureStepCommands)).To(nameof(RemoveNodeCommands));
-
         }
+
+        #region Window
+
+        public ICommand CloseCommand
+        {
+            get
+            {
+                return new DelegateCommand(executedParam =>
+                {
+                    Application.Current.Shutdown();
+                },
+                canExecutedParam => true);
+            }
+        }
+
+        #endregion
+
+        #region Project
 
         public ICommand NewProjectCommand
         {
@@ -36,23 +53,44 @@ namespace AutoClicker.ViewModel
             {
                 return new DelegateCommand(executedParam =>
                 {
-                    CurrentProject = new Project();
+                    _fileStore.SaveProjectToFile(CurrentProject, CurrentProject.ProjectRootDirectory);
                 },
                 canExecutedParam => CurrentProject != null);
             }
         }
 
-        public ICommand CloseCommand
+        public ICommand SaveAsProjectCommand
         {
             get
             {
                 return new DelegateCommand(executedParam =>
                 {
-                    Application.Current.Shutdown();
+                    _fileStore.SaveProjectToFile(CurrentProject, (string)executedParam);
                 },
+                canExecutedParam => CurrentProject != null);
+            }
+        }
+
+        public ICommand OpenProjectCommand
+        {
+            get
+            {
+                return new DelegateCommand(executedParam =>
+                    {
+                        var proj = _fileStore.LoadProjectFromFile((string)executedParam);
+                        if(proj != null)
+                        {
+                            CurrentProject = proj;
+                        }
+                        
+                    },
                 canExecutedParam => true);
             }
         }
+
+        #endregion
+
+        #region Node
 
         public ICommand AddClickStepCommands
         {
@@ -107,6 +145,7 @@ namespace AutoClicker.ViewModel
             }
         }
 
+        #endregion
 
     }
 }

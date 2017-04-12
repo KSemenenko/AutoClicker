@@ -22,20 +22,50 @@ namespace AutoClicker.Model
             bitmap.Save(name);
         }
 
-        public bool FileExist(string name)
+        public bool FileExist(string path)
         {
-            return File.Exists(name);
+            return File.Exists(path);
         }
 
-        public Project LoadProjectFromFile(string name)
+        public bool FolderExist(string path)
         {
-            return JsonConvert.DeserializeObject<Project>(name);
+            return Directory.Exists(path);
         }
 
-        public void SaveProjectToFile(Project project, string name)
+        public Project LoadProjectFromFile(string path)
+        {
+            if(string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+            var project = JsonConvert.DeserializeObject<Project>(path);
+            project.ProjectRootDirectory = path;
+
+            return project;
+        }
+
+        public void SaveProjectToFile(Project project, string path)
         {
             var content = JsonConvert.SerializeObject(project);
-            File.WriteAllText(name, content);
+
+            var imageFolder = Path.Combine(project.ProjectRootDirectory, project.ImageFolder);
+            var logsFolder = Path.Combine(project.ProjectRootDirectory, project.LogsFolder);
+            var resultsFolder = Path.Combine(project.ProjectRootDirectory, project.ResultsFolder);
+
+            CreateFolderIfNotExists(imageFolder);
+            CreateFolderIfNotExists(logsFolder);
+            CreateFolderIfNotExists(resultsFolder);
+
+            File.WriteAllText(path, content);
+        }
+
+        private void CreateFolderIfNotExists(string path)
+        {
+            if(!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
     }
 }
