@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using AutoClicker.Model;
 using AutoClicker.Model.Abstraction.Interface;
 using AutoClicker.Model.ExecutableSteps;
 using MVVMBase;
+using Application = System.Windows.Application;
 
 namespace AutoClicker.ViewModel
 {
@@ -53,6 +54,12 @@ namespace AutoClicker.ViewModel
             {
                 return new DelegateCommand(executedParam =>
                 {
+                    if(string.IsNullOrEmpty(CurrentProject.ProjectRootDirectory))
+                    {
+                        SaveAsProjectCommand.Execute(executedParam);
+                        return;
+                    }
+
                     _fileStore.SaveProjectToFile(CurrentProject, CurrentProject.ProjectRootDirectory);
                 },
                 canExecutedParam => CurrentProject != null);
@@ -65,7 +72,12 @@ namespace AutoClicker.ViewModel
             {
                 return new DelegateCommand(executedParam =>
                 {
-                    _fileStore.SaveProjectToFile(CurrentProject, (string)executedParam);
+                    var dialog = new FolderBrowserDialog();
+                    if(dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        _fileStore.SaveProjectToFile(CurrentProject, dialog.SelectedPath);
+                    }
+                       
                 },
                 canExecutedParam => CurrentProject != null);
             }
@@ -76,14 +88,18 @@ namespace AutoClicker.ViewModel
             get
             {
                 return new DelegateCommand(executedParam =>
+                {
+
+                    var dialog = new FolderBrowserDialog();
+                    if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        var proj = _fileStore.LoadProjectFromFile((string)executedParam);
-                        if(proj != null)
+                        var proj = _fileStore.LoadProjectFromFile(dialog.SelectedPath);
+                        if (proj != null)
                         {
                             CurrentProject = proj;
                         }
-                        
-                    },
+                    }    
+                },
                 canExecutedParam => true);
             }
         }

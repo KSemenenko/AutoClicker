@@ -25,9 +25,20 @@
                         </MenuItem>
                     </MenuItem>
                     <Separator />
+                    <MenuItem Header="Open" Command="{Binding OpenProjectCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="OpenInNew" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="Save" Command="{Binding SaveProjectCommand}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="ContentSave" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Save as.." Command="{Binding SaveAsProjectCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ContentSaveAll" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />

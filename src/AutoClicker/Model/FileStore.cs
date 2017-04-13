@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using AutoClicker.Model.Abstraction.Interface;
 using Newtonsoft.Json;
 
@@ -12,6 +13,8 @@ namespace AutoClicker.Model
 {
     public class FileStore : IFileStore
     {
+        private string _autoClickerProjectFileName = "project.json";
+
         public Bitmap LoadImageFromFile(string name)
         {
             return (Bitmap)Image.FromFile(name);
@@ -39,7 +42,10 @@ namespace AutoClicker.Model
                 return null;
             }
 
-            var project = JsonConvert.DeserializeObject<Project>(path);
+            var projectFilePath = Path.Combine(path, _autoClickerProjectFileName);
+            var fileContent = File.ReadAllText(projectFilePath);
+
+            var project = JsonConvert.DeserializeObject<Project>(fileContent);
             project.ProjectRootDirectory = path;
 
             return project;
@@ -47,17 +53,21 @@ namespace AutoClicker.Model
 
         public void SaveProjectToFile(Project project, string path)
         {
-            var content = JsonConvert.SerializeObject(project);
+            project.ProjectRootDirectory = path;
 
             var imageFolder = Path.Combine(project.ProjectRootDirectory, project.ImageFolder);
             var logsFolder = Path.Combine(project.ProjectRootDirectory, project.LogsFolder);
             var resultsFolder = Path.Combine(project.ProjectRootDirectory, project.ResultsFolder);
 
+            var projectFilePath = Path.Combine(project.ProjectRootDirectory, _autoClickerProjectFileName);
+
             CreateFolderIfNotExists(imageFolder);
             CreateFolderIfNotExists(logsFolder);
             CreateFolderIfNotExists(resultsFolder);
 
-            File.WriteAllText(path, content);
+
+            var content = JsonConvert.SerializeObject(project);
+            File.WriteAllText(projectFilePath, content);
         }
 
         private void CreateFolderIfNotExists(string path)
