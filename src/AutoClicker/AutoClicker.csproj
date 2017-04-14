@@ -123,6 +123,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\StepJsonConverter.cs" />
     <Compile Include="Model\Abstraction\Interface\IClickModule.cs" />
     <Compile Include="Model\Abstraction\Interface\IExecutableStep.cs" />
     <Compile Include="Model\Abstraction\Interface\IFileStore.cs" />

@@ -45,7 +45,7 @@ namespace AutoClicker.Model
             var projectFilePath = Path.Combine(path, _autoClickerProjectFileName);
             var fileContent = File.ReadAllText(projectFilePath);
 
-            var project = JsonConvert.DeserializeObject<Project>(fileContent);
+            var project = Deserialize(fileContent);
             project.ProjectRootDirectory = path;
 
             return project;
@@ -65,8 +65,7 @@ namespace AutoClicker.Model
             CreateFolderIfNotExists(logsFolder);
             CreateFolderIfNotExists(resultsFolder);
 
-
-            var content = JsonConvert.SerializeObject(project);
+            var content = Serialize(project);
             File.WriteAllText(projectFilePath, content);
         }
 
@@ -76,6 +75,31 @@ namespace AutoClicker.Model
             {
                 Directory.CreateDirectory(path);
             }
+        }
+
+        private string Serialize(Project project)
+        {
+            var indented = Formatting.Indented;
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
+            var serialized = JsonConvert.SerializeObject(project, indented, settings);
+            return serialized;
+        }
+
+        private Project Deserialize(string project)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
+            var deserialized = JsonConvert.DeserializeObject<Project>(project, settings);
+            return deserialized;
         }
     }
 }

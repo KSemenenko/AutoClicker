@@ -43,6 +43,7 @@ namespace AutoClicker.ViewModel
                 return new DelegateCommand(executedParam =>
                 {
                     CurrentProject = new Project();
+                    CurrentProject.Roots.Add(new RootStep("root"));
                 },
                 canExecutedParam => true);
             }
