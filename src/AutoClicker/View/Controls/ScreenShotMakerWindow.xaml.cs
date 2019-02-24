@@ -10,7 +10,7 @@ using AutoClicker.Model.Abstraction.Interface.Inputs;
 using AutoClicker.Model.Inputs;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
-namespace AutoClicker.View
+namespace AutoClicker.View.Controls
 {
     /// <summary>
     ///     Interaction logic for ScreenShotMakerWindow.xaml
@@ -55,7 +55,9 @@ namespace AutoClicker.View
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if(isMouseDown)
+            //TODO fix negative values..
+
+            if (isMouseDown)
             {
                 var curx = e.GetPosition(null).X;
                 var cury = e.GetPosition(null).Y;

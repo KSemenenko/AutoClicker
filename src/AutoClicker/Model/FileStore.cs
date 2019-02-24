@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using AutoClicker.Model.Abstraction.Interface;
 using Newtonsoft.Json;
 
@@ -12,6 +13,8 @@ namespace AutoClicker.Model
 {
     public class FileStore : IFileStore
     {
+        private string _autoClickerProjectFileName = "project.json";
+
         public Bitmap LoadImageFromFile(string name)
         {
             return (Bitmap)Image.FromFile(name);
@@ -22,20 +25,81 @@ namespace AutoClicker.Model
             bitmap.Save(name);
         }
 
-        public bool FileExist(string name)
+        public bool FileExist(string path)
         {
-            return File.Exists(name);
+            return File.Exists(path);
         }
 
-        public Project LoadProjectFromFile(string name)
+        public bool FolderExist(string path)
         {
-            return JsonConvert.DeserializeObject<Project>(name);
+            return Directory.Exists(path);
         }
 
-        public void SaveProjectToFile(Project project, string name)
+        public Project LoadProjectFromFile(string path)
         {
-            var content = JsonConvert.SerializeObject(project);
-            File.WriteAllText(name, content);
+            if(string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+            var projectFilePath = Path.Combine(path, _autoClickerProjectFileName);
+            var fileContent = File.ReadAllText(projectFilePath);
+
+            var project = Deserialize(fileContent);
+            project.ProjectRootDirectory = path;
+
+            return project;
+        }
+
+        public void SaveProjectToFile(Project project, string path)
+        {
+            project.ProjectRootDirectory = path;
+
+            var imageFolder = Path.Combine(project.ProjectRootDirectory, project.ImageFolder);
+            var logsFolder = Path.Combine(project.ProjectRootDirectory, project.LogsFolder);
+            var resultsFolder = Path.Combine(project.ProjectRootDirectory, project.ResultsFolder);
+
+            var projectFilePath = Path.Combine(project.ProjectRootDirectory, _autoClickerProjectFileName);
+
+            CreateFolderIfNotExists(imageFolder);
+            CreateFolderIfNotExists(logsFolder);
+            CreateFolderIfNotExists(resultsFolder);
+
+            var content = Serialize(project);
+            File.WriteAllText(projectFilePath, content);
+        }
+
+        private void CreateFolderIfNotExists(string path)
+        {
+            if(!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        private string Serialize(Project project)
+        {
+            var indented = Formatting.Indented;
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
+            var serialized = JsonConvert.SerializeObject(project, indented, settings);
+            return serialized;
+        }
+
+        private Project Deserialize(string project)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
+            var deserialized = JsonConvert.DeserializeObject<Project>(project, settings);
+            return deserialized;
         }
     }
 }

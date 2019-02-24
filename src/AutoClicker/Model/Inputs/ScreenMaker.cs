@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -61,12 +62,30 @@ namespace AutoClicker.Model.Inputs
 
         public Bitmap GetBitmapFromScreen(Rectangle rectangle)
         {
-            var bmp = new Bitmap(rectangle.Width, rectangle.Height);
-            using(var g = Graphics.FromImage(bmp))
+            try
             {
-                g.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, bmp.Size);
-                return bmp;
+                var absWidth = Math.Abs(rectangle.Width);
+                var absHeight = Math.Abs(rectangle.Height);
+                if(absHeight <= 0 || absWidth <= 0)
+                {
+                    return null;
+                }
+
+                var bmp = new Bitmap(absWidth, absHeight);
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    g.CopyFromScreen(rectangle.X, rectangle.Y, 0, 0, bmp.Size);
+                    return bmp;
+                }
             }
+            catch(Exception ex)
+            {
+#if DEBUG
+                Debugger.Break();
+#endif
+                return null;
+            }
+            
         }
     }
 }

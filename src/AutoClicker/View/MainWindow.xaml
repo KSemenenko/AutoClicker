@@ -25,9 +25,20 @@
                         </MenuItem>
                     </MenuItem>
                     <Separator />
+                    <MenuItem Header="Open" Command="{Binding OpenProjectCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="OpenInNew" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="Save" Command="{Binding SaveProjectCommand}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="ContentSave" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Save as.." Command="{Binding SaveAsProjectCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ContentSaveAll" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
@@ -88,10 +99,8 @@
                                          ToolTipService.Placement="Right"
                                          ToolTip="STeps...">
                 <StackPanel>
-                    <Button Command="{Binding AddNodeCommands}" Content="Click Step" ToolTip="One with custom opacity" />
-                    <Button Command="{Binding AddNodeCommands}" Content="Wait Step" ToolTip="One with custom opacity" />
-                    <Button Command="{Binding AddNodeCommands}" Content="etc Step" ToolTip="One with custom opacity" />
-
+                    <Button Command="{Binding AddClickStepCommands}" Content="Click Step" ToolTip="One with custom opacity" />
+                    <Button Command="{Binding AddSearchPictureStepCommands}" Content="Search Step" ToolTip="One with custom opacity" />
                 </StackPanel>
 
             </materialDesign:PopupBox>
@@ -102,7 +111,9 @@
             <GridSplitter Grid.Row="0" Grid.Column="1" Width="5" VerticalAlignment="Stretch"
                           HorizontalAlignment="Center" />
 
-            <Grid Grid.Column="2" />
+            <Grid  Grid.Column="2" >
+                <ContentControl Content="{Binding CurrentControl}" Margin="10" />
+            </Grid>
 
         </Grid>
 

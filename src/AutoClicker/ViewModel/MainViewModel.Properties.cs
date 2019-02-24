@@ -1,16 +1,17 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using AutoClicker.Model;
 using AutoClicker.Model.Abstraction.Interface;
 using MVVMBase;
 
 namespace AutoClicker.ViewModel
 {
-    internal partial class MainViewModel : BaseViewModel
+    public partial class MainViewModel : BaseViewModel
     {
       
         private void BindProperties()
         {
-            BindToPropertyChange(nameof(CurrentProject), nameof(CurrentProjectSteps));
+            Bind(nameof(CurrentProject)).To(nameof(CurrentProjectSteps));
         }
 
         private Project _currentProject;
@@ -45,6 +46,18 @@ namespace AutoClicker.ViewModel
             set
             {
                 _currentStep = value;
+                OnPropertyChanged();
+                CurrentControl = ShowStepUserControl(_currentStep);
+            }
+        }
+
+        private UserControl _currentControl;
+        public UserControl CurrentControl
+        {
+            get { return _currentControl; }
+            set
+            {
+                _currentControl = value;
                 OnPropertyChanged();
             }
         }

@@ -8,7 +8,8 @@ namespace AutoClicker.Model.ExecutableSteps
     {
         private readonly TimeSpan _delay;
         private int _countTry;
-        public WaitPictureStep(string id, uint countTry, TimeSpan time, ISearchPictureModule searchPictureModule, IFileStore fileStore, string name) : base(id, searchPictureModule, fileStore, name)
+        public WaitPictureStep(string id, uint countTry, TimeSpan time, ISearchPictureModule searchPictureModule, IFileStore fileStore, string picturePath) 
+            : base(id, searchPictureModule, fileStore, picturePath)
         {
             _delay = time;
             _countTry = (int)countTry;
@@ -19,7 +20,7 @@ namespace AutoClicker.Model.ExecutableSteps
             Rectangle rect = Rectangle.Empty;
             while(_countTry != 0)
             {
-                rect = _searchPicture.SearchPicture(_name);
+                rect = _searchPicture.SearchPicture(_picturePath);
 
                 if(rect == Rectangle.Empty)
                 {
